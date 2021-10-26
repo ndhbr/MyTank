@@ -1,4 +1,4 @@
-package de.ndhbr.mytank
+package de.ndhbr.mytank.ui.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,15 +6,17 @@ import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
+import de.ndhbr.mytank.R
+import de.ndhbr.mytank.ui.auth.LoginActivity
+import kotlinx.android.synthetic.main.activity_overview.*
 
-class MainActivity : AppCompatActivity() {
+class OverviewActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_overview)
 
         // Intent extras
         val userId = intent.getStringExtra("user_id")
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             auth.signOut()
 
             // Send user back
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            startActivity(Intent(this@OverviewActivity, LoginActivity::class.java))
             finish()
         }
     }

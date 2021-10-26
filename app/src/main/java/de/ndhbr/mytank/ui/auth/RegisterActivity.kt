@@ -1,4 +1,4 @@
-package de.ndhbr.mytank
+package de.ndhbr.mytank.ui.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import de.ndhbr.mytank.ui.home.OverviewActivity
+import de.ndhbr.mytank.R
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,8 +23,8 @@ class RegisterActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         btn_register.setOnClickListener {
-            val email = et_register_email.text.toString().trim { it <= ' '}
-            val password = et_register_email.text.toString().trim { it <= ' '}
+            val email = et_register_email.text.toString().trim { it <= ' ' }
+            val password = et_register_email.text.toString().trim { it <= ' ' }
 
             when {
                 TextUtils.isEmpty(email) -> {
@@ -54,8 +56,10 @@ class RegisterActivity : AppCompatActivity() {
                                 ).show()
 
                                 // Send to main screen
-                                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                val intent =
+                                    Intent(this@RegisterActivity, OverviewActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("user_id", firebaseUser.uid)
                                 startActivity(intent)
                                 finish()
