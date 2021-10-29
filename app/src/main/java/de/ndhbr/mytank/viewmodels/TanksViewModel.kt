@@ -1,8 +1,8 @@
 package de.ndhbr.mytank.ui.home
 
 import androidx.lifecycle.ViewModel
-import de.ndhbr.mytank.data.Tank
-import de.ndhbr.mytank.data.TankRepository
+import de.ndhbr.mytank.models.Tank
+import de.ndhbr.mytank.repositories.TankRepository
 
 class TanksViewModel(private val tankRepository: TankRepository)
     : ViewModel() {

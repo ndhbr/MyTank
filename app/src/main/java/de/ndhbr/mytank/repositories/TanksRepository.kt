@@ -1,4 +1,7 @@
-package de.ndhbr.mytank.data
+package de.ndhbr.mytank.repositories
+
+import de.ndhbr.mytank.models.Tank
+import de.ndhbr.mytank.data.TankDao
 
 class TankRepository private constructor(private val tankDao: TankDao) {
 
