@@ -1,23 +1,23 @@
 package de.ndhbr.mytank.repositories
 
 import de.ndhbr.mytank.models.Tank
-import de.ndhbr.mytank.data.TankDao
+import de.ndhbr.mytank.data.TanksDao
 
-class TankRepository private constructor(private val tankDao: TankDao) {
+class TanksRepository private constructor(private val tanksDao: TanksDao) {
 
     fun addTank(tank: Tank) {
-        tankDao.addTank(tank)
+        tanksDao.addTank(tank)
     }
 
-    fun getTanks() = tankDao.getQuotes()
+    fun getTanks() = tanksDao.getQuotes()
 
     companion object {
         @Volatile
-        private var instance: TankRepository? = null
+        private var instance: TanksRepository? = null
 
-        fun getInstance(tankDao: TankDao) =
+        fun getInstance(tanksDao: TanksDao) =
             instance ?: synchronized(this) {
-                instance ?: TankRepository(tankDao).also { instance = it }
+                instance ?: TanksRepository(tanksDao).also { instance = it }
             }
     }
 }

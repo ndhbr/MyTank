@@ -1,7 +1,8 @@
 package de.ndhbr.mytank.data
 
 class Database private constructor() {
-    val tankDao = TankDao()
+    val authDao = AuthDao()
+    val tankDao = TanksDao()
 
     companion object {
         @Volatile

@@ -1,4 +1,4 @@
-package de.ndhbr.mytank.data
+package de.ndhbr.mytank.models
 
 data class User(val userId: Int) {
     override fun toString(): String {

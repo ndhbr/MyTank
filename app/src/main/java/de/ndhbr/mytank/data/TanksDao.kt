@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.ndhbr.mytank.models.Tank
 
-class TankDao {
+class TanksDao {
     private val tankList = mutableListOf<Tank>()
     private val tanks = MutableLiveData<List<Tank>>()
 

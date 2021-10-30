@@ -5,23 +5,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.R
+import de.ndhbr.mytank.uitilities.InjectorUtils
+import de.ndhbr.mytank.viewmodels.AuthViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize Firebase Auth
-        auth = Firebase.auth
+        val factory = InjectorUtils.provideAuthViewModelFactory()
+        val viewModel =
+            ViewModelProvider(this@RegisterActivity, factory).get(AuthViewModel::class.java)
 
+        initializeUi(viewModel)
+    }
+
+    private fun initializeUi(viewModel: AuthViewModel) {
         btn_register.setOnClickListener {
             val email = et_register_email.text.toString().trim { it <= ' ' }
             val password = et_register_email.text.toString().trim { it <= ' ' }
@@ -44,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    auth.createUserWithEmailAndPassword(email, password)
+                    viewModel.register(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 val firebaseUser = task.result!!.user!!

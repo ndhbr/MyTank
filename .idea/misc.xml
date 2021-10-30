@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_header.xml" value="0.40925925925925927" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_overview.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_tanks.xml" value="0.44021739130434784" />
+        <entry key="app/src/main/res/layout/list_tank_item.xml" value="0.35190217391304346" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.34010416666666665" />
       </map>
     </option>
   </component>
