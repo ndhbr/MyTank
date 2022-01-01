@@ -1,37 +1,47 @@
 package de.ndhbr.mytank.ui.home
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.Fragment
 import de.ndhbr.mytank.R
-import de.ndhbr.mytank.ui.auth.LoginActivity
-import kotlinx.android.synthetic.main.activity_overview.*
+import de.ndhbr.mytank.databinding.ActivityOverviewBinding
 
 class OverviewActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    // View binding
+    private lateinit var binding: ActivityOverviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_overview)
+        binding = ActivityOverviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Intent extras
-        val userId = intent.getStringExtra("user_id")
+        initializeUi()
+    }
 
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-
-        tv_user_id.text = "USER ID: $userId"
-
-        btn_logout.setOnClickListener {
-            auth.signOut()
-
-            // Send user back
-            startActivity(Intent(this@OverviewActivity, LoginActivity::class.java))
-            finish()
+    private fun initializeUi() {
+        // Tabbar
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.page_1 -> {
+                    // Respond to navigation item 1 click
+                    changeFragment(TanksListFragment())
+                    true
+                }
+                R.id.page_2 -> {
+                    // Respond to navigation item 2 click
+                    changeFragment(MoreFragment())
+                    true
+                }
+                else -> false
+            }
         }
+    }
+
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fl_tanks_list, fragment)
+            .commit()
     }
 }

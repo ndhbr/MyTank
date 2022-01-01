@@ -4,18 +4,24 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import de.ndhbr.mytank.R
+import de.ndhbr.mytank.databinding.ActivityLoginBinding
 import de.ndhbr.mytank.ui.home.OverviewActivity
-import de.ndhbr.mytank.uitilities.InjectorUtils
+import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.AuthViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+
+    // View binding
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeUi()
     }
@@ -25,9 +31,43 @@ class LoginActivity : AppCompatActivity() {
         val viewModel =
             ViewModelProvider(this@LoginActivity, factory).get(AuthViewModel::class.java)
 
-        btn_login.setOnClickListener {
-            val email = et_login_email.text.toString().trim { it <= ' ' }
-            val password = et_login_password.text.toString().trim { it <= ' ' }
+        // Set up OnPreDrawListener to redirect directly to the home
+        // screen; if the user is already logged in
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object: ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    // Check if the initial data is ready.
+                    return if (viewModel.isLoggedIn()) {
+                        // The user is logged in; jump to OverviewActivity
+                        val intent = Intent(this@LoginActivity, OverviewActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        // The user is not logged in; just display
+                        true
+                    }
+                }
+            }
+        )
+
+        // Register button
+        binding.tvRegister.setOnClickListener {
+            val intent = Intent(
+                this,
+                RegisterActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+            startActivity(intent)
+        }
+
+        // Login button
+        binding.btnLogin.setOnClickListener {
+            val email = binding.etLoginEmail.text.toString().trim { it <= ' ' }
+            val password = binding.etLoginPassword.text.toString().trim { it <= ' ' }
 
             when {
                 TextUtils.isEmpty(email) -> {

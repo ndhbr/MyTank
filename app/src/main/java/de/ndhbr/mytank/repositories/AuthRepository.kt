@@ -6,12 +6,20 @@ import de.ndhbr.mytank.data.AuthDao
 
 class AuthRepository private constructor(private val authDao: AuthDao) {
 
+    fun isLoggedIn(): Boolean {
+        return authDao.isLoggedIn()
+    }
+
     fun login(email: String, password: String): Task<AuthResult> {
         return authDao.login(email, password)
     }
 
     fun register(email: String, password: String): Task<AuthResult> {
         return authDao.register(email, password)
+    }
+
+    fun logout() {
+        return authDao.logout()
     }
 
     companion object {

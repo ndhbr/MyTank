@@ -7,12 +7,20 @@ import de.ndhbr.mytank.repositories.AuthRepository
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
+    fun isLoggedIn(): Boolean {
+        return authRepository.isLoggedIn()
+    }
+
     fun login(email: String, password: String): Task<AuthResult> {
         return authRepository.login(email, password)
     }
 
     fun register(email: String, password: String): Task<AuthResult> {
         return authRepository.register(email, password)
+    }
+
+    fun logout() {
+        return authRepository.logout()
     }
 
     fun sendPasswordResetMail() {}

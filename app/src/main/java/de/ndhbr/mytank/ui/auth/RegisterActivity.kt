@@ -7,16 +7,19 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.ui.home.OverviewActivity
-import de.ndhbr.mytank.R
-import de.ndhbr.mytank.uitilities.InjectorUtils
+import de.ndhbr.mytank.databinding.ActivityRegisterBinding
+import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.AuthViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    // View binding
+    private lateinit var binding: ActivityRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val factory = InjectorUtils.provideAuthViewModelFactory()
         val viewModel =
@@ -26,9 +29,17 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initializeUi(viewModel: AuthViewModel) {
-        btn_register.setOnClickListener {
-            val email = et_register_email.text.toString().trim { it <= ' ' }
-            val password = et_register_email.text.toString().trim { it <= ' ' }
+        // Login button
+        binding.tvLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }
+
+        // Register button
+        binding.btnRegister.setOnClickListener {
+            val email = binding.etRegisterEmail.text.toString().trim { it <= ' ' }
+            val password = binding.etRegisterPassword.text.toString().trim { it <= ' ' }
 
             when {
                 TextUtils.isEmpty(email) -> {

@@ -9,11 +9,19 @@ import com.google.firebase.ktx.Firebase
 class AuthDao {
     private var auth: FirebaseAuth = Firebase.auth
 
+    fun isLoggedIn(): Boolean {
+        return auth.currentUser != null
+    }
+
     fun login(email: String, password: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
     fun register(email: String, password: String): Task<AuthResult> {
         return auth.createUserWithEmailAndPassword(email, password)
+    }
+
+    fun logout() {
+        return auth.signOut()
     }
 }
