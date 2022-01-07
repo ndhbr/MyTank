@@ -3,6 +3,9 @@
     package="de.ndhbr.mytank">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -38,6 +41,15 @@
         <activity
             android:name=".ui.home.OverviewActivity"
             android:exported="true" />
+
+        <receiver android:name=".receiver.DailyBroadcastReceiver" />
+        <receiver android:name=".receiver.BootBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -3,8 +3,8 @@ package de.ndhbr.mytank.ui.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityOverviewBinding
+import de.ndhbr.mytank.R
 
 class OverviewActivity : AppCompatActivity() {
 

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.databinding.ActivityRegisterBinding
+import de.ndhbr.mytank.utilities.AlarmUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.AuthViewModel
 

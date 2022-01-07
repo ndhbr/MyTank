@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.databinding.ActivityLoginBinding
 import de.ndhbr.mytank.ui.home.OverviewActivity
+import de.ndhbr.mytank.utilities.AlarmUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.AuthViewModel
 
@@ -23,7 +24,15 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initAlarm()
         initializeUi()
+    }
+
+    private fun initAlarm() {
+        val alarmUtils = AlarmUtils(this);
+        if (!alarmUtils.isAlarmUpAndRunning()) {
+            alarmUtils.setAlarm()
+        }
     }
 
     private fun initializeUi() {

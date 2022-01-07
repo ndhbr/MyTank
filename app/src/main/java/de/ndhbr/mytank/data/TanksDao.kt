@@ -9,7 +9,6 @@ import de.ndhbr.mytank.models.Tank
 import java.lang.Exception
 
 class TanksDao constructor(private val firestore: FirebaseFirestore) {
-    private val TAG = "TANKS_DAO"
 
     private val tankList = mutableListOf<Tank>()
     private val tanks = MutableLiveData<List<Tank>>()
@@ -46,7 +45,6 @@ class TanksDao constructor(private val firestore: FirebaseFirestore) {
         firestore.collection("/tanks").orderBy("createdAt").limit(10)
             .addSnapshotListener { value, error ->
                 if (error != null) {
-                    Log.w(TAG, "Listen failed", error)
                     tanks.value = ArrayList()
                 }
 
