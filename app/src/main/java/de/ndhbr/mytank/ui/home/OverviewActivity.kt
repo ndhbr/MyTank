@@ -24,12 +24,14 @@ class OverviewActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_1 -> {
-                    // Respond to navigation item 1 click
                     changeFragment(TanksListFragment())
                     true
                 }
                 R.id.page_2 -> {
-                    // Respond to navigation item 2 click
+                    changeFragment(AlarmFragment())
+                    true
+                }
+                R.id.page_3 -> {
                     changeFragment(MoreFragment())
                     true
                 }

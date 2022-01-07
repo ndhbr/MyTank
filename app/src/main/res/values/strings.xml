@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyTank</string>
-    <string name="bnm_home">Home</string>
+    <string name="bnm_tanks">Tanks</string>
     <string name="bnm_more">More</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -49,4 +49,7 @@
     <string name="do_you_want_to_remove_tank_item">Do you really want to remove this item?</string>
     <string name="type">Type</string>
     <string name="you_have_not_added_any_items_to_the_list_yet">You have not added any items to the list yet</string>
+    <string name="bnm_alarms">Alarms</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

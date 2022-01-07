@@ -3,11 +3,16 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/bnm_home"/>
+        android:icon="@drawable/ic_baseline_panorama_fish_eye_24"
+        android:title="@string/bnm_tanks" />
     <item
         android:id="@+id/page_2"
         android:enabled="true"
+        android:icon="@drawable/ic_baseline_alarm_24"
+        android:title="@string/bnm_alarms" />
+    <item
+        android:id="@+id/page_3"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_more_horiz_24"
-        android:title="@string/bnm_more"/>
+        android:title="@string/bnm_more" />
 </menu>
