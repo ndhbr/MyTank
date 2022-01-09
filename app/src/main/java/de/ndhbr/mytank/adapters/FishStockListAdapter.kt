@@ -51,7 +51,6 @@ class FishStockListAdapter(
             val types = context.resources.getStringArray(R.array.item_type)
 
             with(binding) {
-
                 tvFishStockListTitle.text = tankItem.name
                 tvFishStockListSubtitle.text = tankItem.type?.name
                 if (tankItem.type != null) {

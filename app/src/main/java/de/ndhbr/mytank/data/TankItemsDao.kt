@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import de.ndhbr.mytank.models.TankItem
+import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class TankItemsDao constructor(private val firestore: FirebaseFirestore
@@ -31,7 +33,7 @@ class TankItemsDao constructor(private val firestore: FirebaseFirestore
 
     // Update tank item from tank
     fun updateTank(tankId: String, tankItem: TankItem): Task<Void> {
-        if (!tankId.isNullOrEmpty() && !tankItem.tankItemId.isNullOrEmpty()) {
+        if (tankId.isNotEmpty() && !tankItem.tankItemId.isNullOrEmpty()) {
             return firestore
                 .collection("/tanks")
                 .document(tankId)
@@ -63,8 +65,8 @@ class TankItemsDao constructor(private val firestore: FirebaseFirestore
             .collection("/tanks")
             .document(tankId)
             .collection("/items")
-            .orderBy("createdAt")
-            .limit(10)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .limit(10) // TODO: Increase limit and limit in frontend
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.w(TAG, "Listen failed", error)
@@ -83,5 +85,32 @@ class TankItemsDao constructor(private val firestore: FirebaseFirestore
             }
 
         return tankItems
+    }
+
+    // Get a list of items belonging to a tank
+    suspend fun getTankItemsListByTankId(tankId: String): List<TankItem> {
+        val result = ArrayList<TankItem>()
+
+        val snapshot = firestore
+            .collection("/tanks")
+            .document(tankId)
+            .collection("/items")
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .limit(10) // TODO
+            .get()
+            .await()
+
+        if (!snapshot.isEmpty) {
+            for (doc in snapshot.documents) {
+                val tankItem = doc.toObject(TankItem::class.java)
+
+                if (tankItem != null) {
+                    tankItem.tankItemId = doc.id
+                    result.add(tankItem)
+                }
+            }
+        }
+
+        return result
     }
 }

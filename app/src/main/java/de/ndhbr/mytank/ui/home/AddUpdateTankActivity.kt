@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityAddTankBinding
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.utilities.DateUtils
@@ -21,6 +22,7 @@ class AddUpdateTankActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = ActivityAddTankBinding.inflate(layoutInflater)
+        title = getString(R.string.ab_tank)
 
         setContentView(binding.root)
 

@@ -28,6 +28,7 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = ActivityAddUpdateTankItemBinding.inflate(layoutInflater)
+        title = getString(R.string.ab_tank_item)
 
         setContentView(binding.root)
 

@@ -30,8 +30,9 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTanksListBinding.inflate(inflater, container, false)
+        activity?.title = getString(R.string.ab_tanks)
 
         initializeUi()
 

@@ -1,10 +1,8 @@
 package de.ndhbr.mytank.repositories
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentId
-import com.google.firebase.firestore.DocumentReference
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.data.TanksDao
+import kotlinx.coroutines.runBlocking
 
 class TanksRepository private constructor(private val tanksDao: TanksDao) {
 
@@ -17,8 +15,11 @@ class TanksRepository private constructor(private val tanksDao: TanksDao) {
     // Remove
     fun removeTankById(tankId: String) = tanksDao.removeTankById(tankId)
 
-    // List
+    // Live List
     fun getTanks() = tanksDao.getTanks()
+
+    // List Tanks
+    suspend fun getTanksList() = tanksDao.getTanksList()
 
     companion object {
         @Volatile

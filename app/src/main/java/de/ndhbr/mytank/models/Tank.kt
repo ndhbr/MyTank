@@ -8,6 +8,7 @@ import java.util.Date
 
 data class Tank(
     var tankId: String? = "",
+    var userId: String? = "",
     var name: String? = "",
     var size: Int? = 0,
     var hasImage: Boolean? = false,
@@ -15,6 +16,7 @@ data class Tank(
     val createdAt: Timestamp? = Timestamp.now()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readInt(),
@@ -25,6 +27,7 @@ data class Tank(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(tankId)
+        parcel.writeString(userId)
         parcel.writeString(name)
         parcel.writeInt(size!!)
         parcel.writeByte(if (hasImage == true) 1.toByte() else 0.toByte())
@@ -44,5 +47,9 @@ data class Tank(
         override fun newArray(size: Int): Array<Tank?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun toString(): String {
+        return name ?: "No name"
     }
 }

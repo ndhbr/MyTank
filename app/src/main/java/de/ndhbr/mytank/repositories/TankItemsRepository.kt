@@ -18,9 +18,13 @@ class TankItemsRepository private constructor(
     fun removeTankItemById(tankId: String, tankItemId: String) =
         tankItemsDao.removeTankItemById(tankId, tankItemId)
 
-    // List
+    // Live List
     fun getTankItems(tankId: String) =
         tankItemsDao.getTankItemsByTankId(tankId)
+
+    // List Tank Items
+    suspend fun getTankItemsList(tankId: String) =
+        tankItemsDao.getTankItemsListByTankId(tankId)
 
     companion object {
         @Volatile

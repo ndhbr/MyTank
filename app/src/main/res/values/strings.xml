@@ -29,6 +29,32 @@
         <item name="CRUSTACEAN">Crustacean</item>
         <item name="PLANT">Plant</item>
     </string-array>
+    <string-array name="hour_selection">
+        <item name="0">00:00 (12 am)</item>
+        <item name="1">01:00 (1 am)</item>
+        <item name="2">02:00 (2 am)</item>
+        <item name="3">03:00 (3 am)</item>
+        <item name="4">04:00 (4 am)</item>
+        <item name="5">05:00 (5 am)</item>
+        <item name="6">06:00 (6 am)</item>
+        <item name="7">07:00 (7 am)</item>
+        <item name="8">08:00 (8 am)</item>
+        <item name="9">09:00 (9 am)</item>
+        <item name="10">10:00 (10 am)</item>
+        <item name="11">11:00 (11 am)</item>
+        <item name="12">12:00 (12 pm)</item>
+        <item name="13">13:00 (1 pm)</item>
+        <item name="14">14:00 (2 pm)</item>
+        <item name="15">15:00 (3 pm)</item>
+        <item name="16">16:00 (4 pm)</item>
+        <item name="17">17:00 (5 pm)</item>
+        <item name="18">18:00 (6 pm)</item>
+        <item name="19">19:00 (7 pm)</item>
+        <item name="20">20:00 (8 pm)</item>
+        <item name="21">21:00 (9 pm)</item>
+        <item name="22">22:00 (10 pm)</item>
+        <item name="23">23:00 (11 pm)</item>
+    </string-array>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -50,6 +76,19 @@
     <string name="type">Type</string>
     <string name="you_have_not_added_any_items_to_the_list_yet">You have not added any items to the list yet</string>
     <string name="bnm_alarms">Alarms</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_item_alarm">Set item alarm</string>
+    <string name="time_of_the_day">Time of the day</string>
+    <string name="only_every_second_week">Only every second week</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="add_item_alarm">Add item alarm</string>
+    <string name="tank">Tank</string>
+    <string name="tank_item">Tank item</string>
+    <string name="notification_default_title">MyTank</string>
+    <string name="notification_default_subtitle">It\'s time to care about your tank!</string>
+    <string name="ab_alarms">Alarms</string>
+    <string name="ab_tanks">Tanks</string>
+    <string name="ab_more">More</string>
+    <string name="ab_item_alarm">Item Alarm</string>
+    <string name="ab_tank">Tank</string>
+    <string name="ab_tank_item">Tank Item</string>
 </resources>

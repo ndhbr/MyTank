@@ -5,6 +5,10 @@
       <map>
         <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.1648148148148148" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3848958333333333" />
+        <entry key="app/src/main/res/drawable/daypicker_shape_oval.xml" value="0.2388888888888889" />
+        <entry key="app/src/main/res/drawable/daypicker_shape_unselected_oval.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/daypicker_toggle_bg.xml" value="0.2388888888888889" />
+        <entry key="app/src/main/res/drawable/daypicker_toggle_text_color.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_more_horiz_24.xml" value="0.3848958333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_panorama_fish_eye_24.xml" value="0.3005128205128205" />
@@ -13,6 +17,8 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3848958333333333" />
         <entry key="app/src/main/res/drawable/ic_round_view.xml" value="0.30520833333333336" />
         <entry key="app/src/main/res/layout/activity_add_tank.xml" value="0.29121315023666683" />
+        <entry key="app/src/main/res/layout/activity_add_update_item_alarm.xml" value="0.2890625" />
+        <entry key="app/src/main/res/layout/activity_add_update_item_alert.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_update_tank_item.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2574074074074074" />
         <entry key="app/src/main/res/layout/activity_overview.xml" value="0.3108872527358592" />
@@ -21,13 +27,15 @@
         <entry key="app/src/main/res/layout/activity_tank.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/activity_tanks.xml" value="0.1405775075987842" />
         <entry key="app/src/main/res/layout/content_tank.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/daypicker.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/fragment_alarm.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_fish_stock_list.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.23703703703703705" />
         <entry key="app/src/main/res/layout/fragment_tanks_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_fish_stock_item.xml" value="0.26153846153846155" />
+        <entry key="app/src/main/res/layout/list_item_alarm_item.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/list_tank_item.xml" value="0.2855755214903625" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2890625" />
         <entry key="app/src/main/res/menu/tank_menu.xml" value="0.2890625" />

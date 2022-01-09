@@ -1,7 +1,10 @@
 package de.ndhbr.mytank.models
 
-data class User(val userId: Int) {
+data class User(
+    var userId: String?
+) {
+    @Override
     override fun toString(): String {
-        return userId.toString()
+        return this.userId ?: ""
     }
 }

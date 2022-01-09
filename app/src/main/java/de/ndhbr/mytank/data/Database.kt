@@ -10,8 +10,9 @@ class Database private constructor() {
 
     // Database objects
     val authDao = AuthDao()
-    val tanksDao = TanksDao(db)
+    val tanksDao = TanksDao(db, authDao.user())
     val tankItemsDao = TankItemsDao(db)
+    val itemAlarmDao = ItemAlarmDao(db, authDao.user())
 
     companion object {
         @Volatile
@@ -21,5 +22,9 @@ class Database private constructor() {
             instance ?: synchronized(this) {
                 instance ?: Database().also { instance = it }
             }
+
+        fun destroy() { // TODO: call
+            instance = null
+        }
     }
 }
