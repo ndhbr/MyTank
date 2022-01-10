@@ -6,7 +6,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="login_up">LOGIN</string>
-    <string name="without_registration_up">WITHOUT REGISTRATION</string>
+    <string name="without_registration_up">Without registration</string>
     <string name="no_account_yet">No account yet?</string>
     <string name="register">Register</string>
     <string name="register_up">REGISTER</string>
@@ -28,6 +28,7 @@
         <item name="FISH">Fish</item>
         <item name="CRUSTACEAN">Crustacean</item>
         <item name="PLANT">Plant</item>
+        <item name="SNAIL">Snail</item>
     </string-array>
     <string-array name="hour_selection">
         <item name="0">00:00 (12 am)</item>
@@ -91,4 +92,27 @@
     <string name="ab_item_alarm">Item Alarm</string>
     <string name="ab_tank">Tank</string>
     <string name="ab_tank_item">Tank Item</string>
+    <string name="no_tanks_added_yet">No tanks added yet</string>
+    <string name="click_on_the_plus_at_the_bottom_right_to_add_a_new_aquarium">Click on the plus at the bottom right to add a new aquarium</string>
+    <string name="no_tank_items_added_yet">No tank items added yet</string>
+    <string name="no_alarm_added_yet">No alarm added yet</string>
+    <string name="click_on_the_plus_at_the_bottom_right_to_add_an_alarm_for_your_aquarium">Click on the plus at the bottom right to add an alarm for your aquarium</string>
+    <string name="click_on_the_plus_at_the_bottom_right_to_add_a_new_tank_item">Click on the plus at the bottom right ro add a new tank item</string>
+    <string name="ab_login">Login</string>
+    <string name="ab_register">Register</string>
+    <string name="welcome_to_mytank">Welcome to MyTank</string>
+    <string name="mytank_is_a_simple_way">MyTank is a simple way to give your life a little more order. With MyTank you will never again neglect your aquarium or your fish.\n\nThis app is still in the middle of its initial phase. On this page you will later have many options to configure the app and your account.</string>
+    <string name="login_anonymously_alert_warning">If you delete the app, or log out, you will irrevocably lose access to your app data!</string>
+    <string name="form_error_day_input">Please select at least one day</string>
+    <string name="form_error_alarm_name_input">Please enter a name for your alarm</string>
+    <string name="form_error_alarm_tank_input">Please select a tank from the list</string>
+    <string name="form_error_register_mail_input">Please enter a valid email</string>
+    <string name="form_error_register_password_input">Please enter a strong password</string>
+    <string name="form_error_tank_name_input">Please enter a name for the tank</string>
+    <string name="form_error_tank_size_input">Your tank needs a size</string>
+    <string name="form_error_set_up_date_input">Enter a correct set up date of your tank</string>
+    <string name="form_error_tank_item_name_input">Please enter the name of your item</string>
+    <string name="form_error_tank_item_quantity_input">You need at least one item</string>
+    <string name="form_error_tank_item_type_input">Choose a type for your item</string>
+    <string name="form_error_tank_item_insertion_date_input">Choose the date when you put the item into the aquarium</string>
 </resources>

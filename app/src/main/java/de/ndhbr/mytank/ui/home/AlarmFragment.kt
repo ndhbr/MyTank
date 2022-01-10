@@ -51,6 +51,14 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm), ItemAlarmListener {
         recyclerView.adapter = alarmItemAdapter
 
         viewModel.getItemAlarms().observe(viewLifecycleOwner, { itemAlarms ->
+            if (itemAlarms.isEmpty()) {
+                binding.llNoItemAlarmsHint.visibility = View.VISIBLE
+                binding.rvAlarmList.visibility = View.GONE
+            } else {
+                binding.llNoItemAlarmsHint.visibility = View.GONE
+                binding.rvAlarmList.visibility = View.VISIBLE
+            }
+
             alarmItemAdapter.updateData(itemAlarms as ArrayList<ItemAlarm>)
         })
 

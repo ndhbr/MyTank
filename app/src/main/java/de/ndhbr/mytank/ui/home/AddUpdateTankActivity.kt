@@ -10,6 +10,7 @@ import de.ndhbr.mytank.databinding.ActivityAddTankBinding
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.utilities.DateUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.TanksViewModel
 import java.util.*
 
@@ -99,13 +100,36 @@ class AddUpdateTankActivity : AppCompatActivity() {
 
             // Save button
             btnAddTank.setOnClickListener {
-                if (!newTank.tankId.isNullOrEmpty()) {
-                    viewModel.updateTank(newTank)
-                } else {
-                    viewModel.addTank(newTank)
-                }
+                when {
+                    newTank.name.isNullOrEmpty() -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankActivity,
+                            getString(R.string.form_error_tank_name_input)
+                        )
+                    }
+                    (newTank.size == null || newTank.size!! <= 0) -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankActivity,
+                            getString(R.string.form_error_tank_size_input)
+                        )
+                    }
+                    (newTank.existsSince == null) -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankActivity,
+                            getString(R.string.form_error_set_up_date_input)
+                        )
+                    }
 
-                finish()
+                    else -> {
+                        if (!newTank.tankId.isNullOrEmpty()) {
+                            viewModel.updateTank(newTank)
+                        } else {
+                            viewModel.addTank(newTank)
+                        }
+
+                        finish()
+                    }
+                }
             }
         }
     }

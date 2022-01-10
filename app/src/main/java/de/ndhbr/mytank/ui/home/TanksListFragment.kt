@@ -55,6 +55,14 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
         recyclerView.adapter = tankAdapter
 
         viewModel.getTanks().observe(viewLifecycleOwner, { tanks ->
+            if (tanks.isEmpty()) {
+                binding.llNoTanksHint.visibility = View.VISIBLE
+                binding.rvList.visibility = View.GONE
+            } else {
+                binding.llNoTanksHint.visibility = View.GONE
+                binding.rvList.visibility = View.VISIBLE
+            }
+
             tankAdapter.updateData(tanks as ArrayList<Tank>)
         })
 

@@ -81,7 +81,7 @@ class ItemAlarmDao constructor(
     // Searches for item alarms by user
     suspend fun getItemAlarmsList(): List<ItemAlarm> {
         val result = ArrayList<ItemAlarm>()
-// TODO current day
+
         val snapshot = firestore
             .collection("/alarms")
             .whereEqualTo("userId", user.userId)

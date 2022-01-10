@@ -11,7 +11,8 @@ import de.ndhbr.mytank.models.TankItem
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
-class TankItemsDao constructor(private val firestore: FirebaseFirestore
+class TankItemsDao constructor(
+    private val firestore: FirebaseFirestore
 ) {
     private val TAG = "TANK_ITEMS_DAO"
 
@@ -75,10 +76,12 @@ class TankItemsDao constructor(private val firestore: FirebaseFirestore
 
                 val savedTankItemsList = mutableListOf<TankItem>()
 
-                for (doc in value!!) {
-                    val tankItem = doc.toObject(TankItem::class.java)
-                    tankItem.tankItemId = doc.id
-                    savedTankItemsList.add(tankItem)
+                if (value != null) {
+                    for (doc in value) {
+                        val tankItem = doc.toObject(TankItem::class.java)
+                        tankItem.tankItemId = doc.id
+                        savedTankItemsList.add(tankItem)
+                    }
                 }
 
                 tankItems.value = savedTankItemsList

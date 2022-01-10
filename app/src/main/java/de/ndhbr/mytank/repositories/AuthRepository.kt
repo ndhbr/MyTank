@@ -14,6 +14,10 @@ class AuthRepository private constructor(private val authDao: AuthDao) {
         return authDao.login(email, password)
     }
 
+    fun loginAnonymously(): Task<AuthResult> {
+        return authDao.loginAnonymously()
+    }
+
     fun register(email: String, password: String): Task<AuthResult> {
         return authDao.register(email, password)
     }

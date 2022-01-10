@@ -79,21 +79,41 @@
                         android:text="@string/fish_stock"
                         android:textSize="20sp" />
 
-                    <TextView
-                        android:id="@+id/tv_no_fish_stock"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/you_have_not_added_any_items_to_the_list_yet"
-                        android:textAlignment="center"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_fish_stock_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:nestedScrollingEnabled="false" />
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_no_tank_items_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:padding="32dp"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_tank_items_added_yet"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/click_on_the_plus_at_the_bottom_right_to_add_a_new_tank_item"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_arrow_fab" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

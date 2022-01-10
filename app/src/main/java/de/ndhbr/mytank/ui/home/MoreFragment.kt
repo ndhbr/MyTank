@@ -48,6 +48,7 @@ class MoreFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
+            Database.destroy()
 
             // Send to login screen
             val intent = Intent(
@@ -55,13 +56,6 @@ class MoreFragment : Fragment() {
                 LoginActivity::class.java
             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
-        }
-
-        binding.btnTest.setOnClickListener {
-            val database = Database.getInstance()
-            viewModel.viewModelScope.launch {
-                Log.d("DB", database.itemAlarmDao.getCurrentAlarmsList().toString())
-            }
         }
     }
 }

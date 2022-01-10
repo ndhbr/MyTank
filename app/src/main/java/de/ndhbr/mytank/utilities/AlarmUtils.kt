@@ -34,11 +34,6 @@ class AlarmUtils(private var context: Context) {
         firstTime[Calendar.MINUTE] = 0
         firstTime[Calendar.SECOND] = 0
 
-
-        // TODO: DEBUG REMOVE
-        // val cal: Calendar = Calendar.getInstance()
-        // cal.add(Calendar.SECOND, 15)
-
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP, firstTime.timeInMillis,
             AlarmManager.INTERVAL_HOUR, pendingIntent

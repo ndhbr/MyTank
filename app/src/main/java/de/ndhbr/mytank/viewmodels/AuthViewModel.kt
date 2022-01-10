@@ -15,6 +15,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         return authRepository.login(email, password)
     }
 
+    fun loginAnonymously(): Task<AuthResult> {
+        return authRepository.loginAnonymously()
+    }
+
     fun register(email: String, password: String): Task<AuthResult> {
         return authRepository.register(email, password)
     }

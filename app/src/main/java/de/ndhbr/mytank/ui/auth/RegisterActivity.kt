@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import de.ndhbr.mytank.R
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.databinding.ActivityRegisterBinding
-import de.ndhbr.mytank.utilities.AlarmUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.AuthViewModel
 
@@ -19,6 +19,8 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.ab_register)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -27,6 +29,11 @@ class RegisterActivity : AppCompatActivity() {
             ViewModelProvider(this@RegisterActivity, factory).get(AuthViewModel::class.java)
 
         initializeUi(viewModel)
+    }
+
+    override fun onSupportNavigateUp(): kotlin.Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun initializeUi(viewModel: AuthViewModel) {
@@ -46,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
                 TextUtils.isEmpty(email) -> {
                     Toast.makeText(
                         this@RegisterActivity,
-                        "Please enter a valid email",
+                        getString(R.string.form_error_register_mail_input),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -54,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                 TextUtils.isEmpty(password) -> {
                     Toast.makeText(
                         this@RegisterActivity,
-                        "Please enter a strong password",
+                        getString(R.string.form_error_register_password_input),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

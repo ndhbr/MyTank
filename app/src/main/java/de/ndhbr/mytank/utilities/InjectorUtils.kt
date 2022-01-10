@@ -13,7 +13,7 @@ import de.ndhbr.mytank.viewmodels.TanksViewModelFactory
 
 object InjectorUtils {
     fun provideAuthViewModelFactory(): AuthViewModelFactory {
-        val authRepository = AuthRepository.getInstance(AuthDao()) // TODO
+        val authRepository = AuthRepository.getInstance(AuthDao())
         return AuthViewModelFactory(authRepository)
     }
 

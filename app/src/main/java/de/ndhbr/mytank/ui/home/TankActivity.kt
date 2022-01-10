@@ -118,9 +118,11 @@ class TankActivity : AppCompatActivity(), TankItemListener {
         tankItemsViewModel.getTankItems(tank.tankId!!).observe(this,
             { tankItems ->
                 if (tankItems.isEmpty()) {
-                    binding.tvNoFishStock.visibility = View.VISIBLE
+                    binding.llNoTankItemsHint.visibility = View.VISIBLE
+                    binding.rvFishStockList.visibility = View.GONE
                 } else {
-                    binding.tvNoFishStock.visibility = View.GONE
+                    binding.llNoTankItemsHint.visibility = View.GONE
+                    binding.rvFishStockList.visibility = View.VISIBLE
                 }
 
                 fishStockAdapter.updateData(tankItems as ArrayList<TankItem>)

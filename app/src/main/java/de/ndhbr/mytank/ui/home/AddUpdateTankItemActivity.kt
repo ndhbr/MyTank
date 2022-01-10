@@ -14,6 +14,7 @@ import de.ndhbr.mytank.enum.TankItemType
 import de.ndhbr.mytank.models.TankItem
 import de.ndhbr.mytank.utilities.DateUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.TankItemsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,8 +22,11 @@ import java.util.*
 class AddUpdateTankItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddUpdateTankItemBinding
+    private lateinit var viewModel: TankItemsViewModel
+
     private var tankId: String = ""
     private var editTankItem: TankItem = TankItem()
+    private lateinit var newTankItem: TankItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,9 +70,9 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
 
     private fun initializeUi() {
         val factory = InjectorUtils.provideTankItemsViewModelFactory()
-        val viewModel =
+        viewModel =
             ViewModelProvider(this, factory).get(TankItemsViewModel::class.java)
-        val newTankItem = editTankItem.copy()
+        newTankItem = editTankItem.copy()
 
         with(binding) {
             etAddUpdateTankItemName.doOnTextChanged { text, _, _, _ ->
@@ -133,17 +137,52 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
                 dialog.show()
             }
 
-            // Save button
+            buildSubmitButton()
+        }
+    }
+
+    // Save button
+    private fun buildSubmitButton() {
+        with(binding) {
             btnAddTankItem.setOnClickListener {
-                if (tankId.isNotEmpty()) {
-                    if (!newTankItem.tankItemId.isNullOrEmpty()) {
-                        viewModel.updateTankItem(tankId, newTankItem)
-                    } else {
-                        viewModel.addTankItem(tankId, newTankItem)
+                when {
+                    newTankItem.name.isNullOrEmpty() -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankItemActivity,
+                            getString(R.string.form_error_tank_item_name_input)
+                        )
+                    }
+                    newTankItem.count <= 0 -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankItemActivity,
+                            getString(R.string.form_error_tank_item_quantity_input)
+                        )
+                    }
+                    newTankItem.type == null -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankItemActivity,
+                            getString(R.string.form_error_tank_item_type_input)
+                        )
+                    }
+                    newTankItem.existsSince == null -> {
+                        ToastUtilities.showShortToast(
+                            this@AddUpdateTankItemActivity,
+                            getString(R.string.form_error_tank_item_insertion_date_input)
+                        )
                     }
 
-                    finish()
-                    // TODO: Finish with result, update data
+                    else -> {
+                        if (tankId.isNotEmpty()) {
+                            if (!newTankItem.tankItemId.isNullOrEmpty()) {
+                                viewModel.updateTankItem(tankId, newTankItem)
+                            } else {
+                                viewModel.addTankItem(tankId, newTankItem)
+                            }
+
+                            finish()
+                            // TODO: Finish with result, update data
+                        }
+                    }
                 }
             }
         }

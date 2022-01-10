@@ -2,9 +2,8 @@ package de.ndhbr.mytank.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +13,7 @@ import de.ndhbr.mytank.models.ItemAlarm
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.models.TankItem
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.ItemAlarmViewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -67,8 +67,11 @@ class AddUpdateItemAlarmActivity : AppCompatActivity() {
                 etAddUpdateItemAlarmName.setText(itemAlarm.name)
                 actvItemAlarmTank.setText(itemAlarm.tankName)
                 actvItemAlarmTankItem.setText(itemAlarm.tankItemName)
-                actvItemAlarmTime.setText(resources.getStringArray(
-                    R.array.hour_selection)[itemAlarm.hour])
+                actvItemAlarmTime.setText(
+                    resources.getStringArray(
+                        R.array.hour_selection
+                    )[itemAlarm.hour]
+                )
                 cbItemAlarmOddWeek.isChecked = itemAlarm.onlyOddWeeks == true
             }
         }
@@ -212,13 +215,36 @@ class AddUpdateItemAlarmActivity : AppCompatActivity() {
     // Button: submit
     private fun buildSubmitButton() {
         binding.btnAddItemAlarm.setOnClickListener {
-            if (itemAlarm.itemAlarmId.isNullOrBlank()) {
-                viewModel.addItemAlarm(itemAlarm)
-            } else {
-                viewModel.updateItemAlarm(itemAlarm)
-            }
+            when {
+                itemAlarm.days?.isEmpty() == true -> {
+                    ToastUtilities.showShortToast(
+                        this,
+                        getString(R.string.form_error_day_input)
+                    )
+                }
+                itemAlarm.name.isNullOrEmpty() -> {
+                    ToastUtilities.showShortToast(
+                        this,
+                        getString(R.string.form_error_alarm_name_input)
+                    )
+                }
+                itemAlarm.tankId.isNullOrEmpty() -> {
+                    ToastUtilities.showShortToast(
+                        this,
+                        getString(R.string.form_error_alarm_tank_input)
+                    )
+                }
 
-            finish()
+                else -> {
+                    if (itemAlarm.itemAlarmId.isNullOrBlank()) {
+                        viewModel.addItemAlarm(itemAlarm)
+                    } else {
+                        viewModel.updateItemAlarm(itemAlarm)
+                    }
+
+                    finish()
+                }
+            }
         }
     }
 }

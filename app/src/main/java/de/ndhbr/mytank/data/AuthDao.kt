@@ -32,6 +32,11 @@ class AuthDao {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
+    // Login anonymously without email + password
+    fun loginAnonymously(): Task<AuthResult> {
+        return auth.signInAnonymously()
+    }
+
     // Register with email + password
     fun register(email: String, password: String): Task<AuthResult> {
         return auth.createUserWithEmailAndPassword(email, password)

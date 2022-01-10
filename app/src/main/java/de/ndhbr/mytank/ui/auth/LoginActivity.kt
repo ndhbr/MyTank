@@ -1,5 +1,7 @@
 package de.ndhbr.mytank.ui.auth
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +9,11 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityLoginBinding
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.utilities.AlarmUtils
@@ -22,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        supportActionBar?.title = getString(R.string.ab_login)
         setContentView(binding.root)
 
         initAlarm()
@@ -40,40 +47,14 @@ class LoginActivity : AppCompatActivity() {
         val viewModel =
             ViewModelProvider(this@LoginActivity, factory).get(AuthViewModel::class.java)
 
-        // Set up OnPreDrawListener to redirect directly to the home
-        // screen; if the user is already logged in
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object: ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    // Check if the initial data is ready.
-                    return if (viewModel.isLoggedIn()) {
-                        // The user is logged in; jump to OverviewActivity
-                        val intent = Intent(this@LoginActivity, OverviewActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
+        initPreDrawListener(viewModel)
+        buildRegisterButton()
+        buildLoginButton(viewModel)
+        buildLoginAnonymouslyButton(viewModel)
+    }
 
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        // The user is not logged in; just display
-                        true
-                    }
-                }
-            }
-        )
-
-        // Register button
-        binding.tvRegister.setOnClickListener {
-            val intent = Intent(
-                this,
-                RegisterActivity::class.java
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-            startActivity(intent)
-        }
-
-        // Login button
+    // Login button
+    private fun buildLoginButton(viewModel: AuthViewModel) {
         binding.btnLogin.setOnClickListener {
             val email = binding.etLoginEmail.text.toString().trim { it <= ' ' }
             val password = binding.etLoginPassword.text.toString().trim { it <= ' ' }
@@ -97,34 +78,92 @@ class LoginActivity : AppCompatActivity() {
 
                 else -> {
                     viewModel.login(email, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val firebaseUser = task.result!!.user!!
-
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "You are signed in successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                // Send to main screen
-                                val intent =
-                                    Intent(this@LoginActivity, OverviewActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("user_id", firebaseUser.uid)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    task.exception!!.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+                        .addOnCompleteListener { result -> handleAuthResult(result) }
                 }
             }
         }
+    }
+
+    // Without registration button
+    private fun buildLoginAnonymouslyButton(viewModel: AuthViewModel) {
+        val dialogClickListener =
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        viewModel.loginAnonymously()
+                            .addOnCompleteListener { result -> handleAuthResult(result) }
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {}
+                }
+            }
+
+        binding.btnAnonymous.setOnClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder
+                .setTitle(R.string.are_you_sure)
+                .setMessage(getString(R.string.login_anonymously_alert_warning))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener)
+                .show()
+        }
+    }
+
+    // Auth Result handler (for login)
+    private fun handleAuthResult(task: Task<AuthResult>) {
+        if (task.isSuccessful) {
+            val firebaseUser = task.result!!.user!!
+
+            // Send to main screen
+            val intent =
+                Intent(this@LoginActivity, OverviewActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.putExtra("user_id", firebaseUser.uid)
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(
+                this@LoginActivity,
+                task.exception!!.message.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    // Register button
+    private fun buildRegisterButton() {
+        binding.tvRegister.setOnClickListener {
+            val intent = Intent(
+                this,
+                RegisterActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+    }
+
+    // Set up OnPreDrawListener to redirect directly to the home
+    // screen; if the user is already logged in
+    private fun initPreDrawListener(viewModel: AuthViewModel) {
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    content.viewTreeObserver.removeOnPreDrawListener(this)
+
+                    // Check if the initial data is ready.
+                    return if (viewModel.isLoggedIn()) {
+                        // The user is logged in; jump to OverviewActivity
+                        val intent = Intent(this@LoginActivity, OverviewActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                        true
+                    } else {
+                        // The user is not logged in; just display
+                        true
+                    }
+                }
+            }
+        )
     }
 }

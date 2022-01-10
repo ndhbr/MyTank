@@ -23,7 +23,7 @@ class Database private constructor() {
                 instance ?: Database().also { instance = it }
             }
 
-        fun destroy() { // TODO: call
+        fun destroy() {
             instance = null
         }
     }
