@@ -13,11 +13,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import de.ndhbr.mytank.R
+import de.ndhbr.mytank.data.Database
 import de.ndhbr.mytank.databinding.ActivityLoginBinding
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.utilities.AlarmUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.AuthViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -48,9 +51,19 @@ class LoginActivity : AppCompatActivity() {
             ViewModelProvider(this@LoginActivity, factory).get(AuthViewModel::class.java)
 
         initPreDrawListener(viewModel)
-        buildRegisterButton()
+        buildPasswordResetButton()
         buildLoginButton(viewModel)
         buildLoginAnonymouslyButton(viewModel)
+        buildRegisterButton()
+    }
+
+    // Password forgot button
+    private fun buildPasswordResetButton() {
+        binding.tvPasswordForgot.setOnClickListener {
+            val intent =
+                Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // Login button
@@ -61,19 +74,17 @@ class LoginActivity : AppCompatActivity() {
 
             when {
                 TextUtils.isEmpty(email) -> {
-                    Toast.makeText(
+                    ToastUtilities.showShortToast(
                         this@LoginActivity,
-                        "Please enter your email",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        getString(R.string.please_enter_your_email)
+                    )
                 }
 
                 TextUtils.isEmpty(password) -> {
-                    Toast.makeText(
+                    ToastUtilities.showShortToast(
                         this@LoginActivity,
-                        "Please enter your password",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        getString(R.string.please_enter_your_password)
+                    )
                 }
 
                 else -> {
@@ -122,11 +133,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            Toast.makeText(
+            ToastUtilities.showLongToast(
                 this@LoginActivity,
-                task.exception!!.message.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+                task.exception!!.message.toString()
+            )
         }
     }
 

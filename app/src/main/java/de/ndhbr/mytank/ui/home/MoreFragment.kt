@@ -2,6 +2,7 @@ package de.ndhbr.mytank.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,9 +47,11 @@ class MoreFragment : Fragment() {
         val viewModel =
             ViewModelProvider(this@MoreFragment, factory).get(AuthViewModel::class.java)
 
+        binding.tvLoggedInAs.text =
+            String.format(resources.getString(R.string.logged_in_as), viewModel.isLoggedInAs())
+
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
-            Database.destroy()
 
             // Send to login screen
             val intent = Intent(

@@ -6,12 +6,12 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.models.User
+import de.ndhbr.mytank.utilities.Constants
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class TanksDao constructor(
-    private val firestore: FirebaseFirestore,
-    private val user: User
+    private val firestore: FirebaseFirestore
 ) {
 
     private val tankList = mutableListOf<Tank>()
@@ -23,12 +23,16 @@ class TanksDao constructor(
 
     // Add tank to database
     fun addTank(tank: Tank): Task<DocumentReference> {
+        val user = AuthDao().user()
+
         tank.userId = user.userId
         return firestore.collection("/tanks").add(tank)
     }
 
     // Update tank in database
     fun updateTank(tank: Tank): Task<Void> {
+        val user = AuthDao().user()
+
         if (!tank.tankId.isNullOrEmpty()) {
             tank.userId = user.userId
             return firestore.collection("/tanks").document(tank.tankId!!).set(tank)
@@ -48,11 +52,13 @@ class TanksDao constructor(
 
     // Get a live tanks list
     fun getTanks(): LiveData<List<Tank>> {
+        val user = AuthDao().user()
+
         firestore
             .collection("/tanks")
             .whereEqualTo("userId", user.userId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .limit(10) // TODO: Set max or infinite scroll
+            .limit(Constants.MAX_TANKS)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     tanks.value = ArrayList()
@@ -77,12 +83,13 @@ class TanksDao constructor(
     // Get tanks list
     suspend fun getTanksList(): List<Tank> {
         val result = ArrayList<Tank>()
+        val user = AuthDao().user()
 
         val snapshot = firestore
             .collection("/tanks")
             .whereEqualTo("userId", user.userId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .limit(10)
+            .limit(Constants.MAX_TANKS)
             .get()
             .await()
 

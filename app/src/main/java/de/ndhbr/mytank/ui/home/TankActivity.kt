@@ -21,10 +21,12 @@ import de.ndhbr.mytank.viewmodels.TankItemsViewModel
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.size
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.UploadTask
 import de.ndhbr.mytank.data.ImageStorage
+import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.ImageUtils
 import de.ndhbr.mytank.viewmodels.TanksViewModel
 
@@ -123,6 +125,13 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                 } else {
                     binding.llNoTankItemsHint.visibility = View.GONE
                     binding.rvFishStockList.visibility = View.VISIBLE
+                }
+
+                // max number of tank items
+                if (binding.rvFishStockList.size >= Constants.MAX_DIFFERENT_TANK_ITEMS) {
+                    binding.fabAddTankItem.visibility = View.GONE
+                } else {
+                    binding.fabAddTankItem.visibility = View.VISIBLE
                 }
 
                 fishStockAdapter.updateData(tankItems as ArrayList<TankItem>)

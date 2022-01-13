@@ -1,18 +1,24 @@
 package de.ndhbr.mytank.data
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class Database private constructor() {
 
+    init {
+        FirebaseAuth.AuthStateListener {
+            destroy()
+        }
+    }
+
     // Firestore instance
     private val db = Firebase.firestore
 
     // Database objects
-    val authDao = AuthDao()
-    val tanksDao = TanksDao(db, authDao.user())
+    val tanksDao = TanksDao(db)
     val tankItemsDao = TankItemsDao(db)
-    val itemAlarmDao = ItemAlarmDao(db, authDao.user())
+    val itemAlarmDao = ItemAlarmDao(db)
 
     companion object {
         @Volatile
@@ -24,7 +30,9 @@ class Database private constructor() {
             }
 
         fun destroy() {
-            instance = null
+            synchronized(this) {
+                instance = null
+            }
         }
     }
 }

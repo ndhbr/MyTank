@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.ndhbr.mytank.R
@@ -15,6 +16,7 @@ import de.ndhbr.mytank.adapters.ItemAlarmListAdapter
 import de.ndhbr.mytank.databinding.FragmentAlarmBinding
 import de.ndhbr.mytank.interfaces.ItemAlarmListener
 import de.ndhbr.mytank.models.ItemAlarm
+import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.ItemAlarmViewModel
 
@@ -57,6 +59,13 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm), ItemAlarmListener {
             } else {
                 binding.llNoItemAlarmsHint.visibility = View.GONE
                 binding.rvAlarmList.visibility = View.VISIBLE
+            }
+
+            // max number of item alarms
+            if (binding.rvAlarmList.size >= Constants.MAX_ALARMS) {
+                binding.fabAddAlarm.visibility = View.GONE
+            } else {
+                binding.fabAddAlarm.visibility = View.VISIBLE
             }
 
             alarmItemAdapter.updateData(itemAlarms as ArrayList<ItemAlarm>)

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import de.ndhbr.mytank.models.TankItem
+import de.ndhbr.mytank.utilities.Constants
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
@@ -67,7 +68,7 @@ class TankItemsDao constructor(
             .document(tankId)
             .collection("/items")
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .limit(10) // TODO: Increase limit and limit in frontend
+            .limit(Constants.MAX_DIFFERENT_TANK_ITEMS)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.w(TAG, "Listen failed", error)
@@ -99,7 +100,7 @@ class TankItemsDao constructor(
             .document(tankId)
             .collection("/items")
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .limit(10) // TODO
+            .limit(Constants.MAX_DIFFERENT_TANK_ITEMS)
             .get()
             .await()
 

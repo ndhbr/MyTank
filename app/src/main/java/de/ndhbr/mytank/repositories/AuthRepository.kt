@@ -10,6 +10,10 @@ class AuthRepository private constructor(private val authDao: AuthDao) {
         return authDao.isLoggedIn()
     }
 
+    fun isLoggedInAs(): String {
+        return authDao.isLoggedInAs() ?: "Anonymous"
+    }
+
     fun login(email: String, password: String): Task<AuthResult> {
         return authDao.login(email, password)
     }
@@ -24,6 +28,10 @@ class AuthRepository private constructor(private val authDao: AuthDao) {
 
     fun logout() {
         return authDao.logout()
+    }
+
+    fun sendPasswordResetMail(email: String): Task<Void> {
+        return authDao.sendPasswordResetMail(email)
     }
 
     companion object {

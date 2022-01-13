@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTank">
         <activity
+            android:name=".ui.auth.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.home.AddUpdateItemAlarmActivity"
             android:exported="false" />
         <activity

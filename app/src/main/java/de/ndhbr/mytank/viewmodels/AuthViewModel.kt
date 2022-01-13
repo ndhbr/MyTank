@@ -11,6 +11,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         return authRepository.isLoggedIn()
     }
 
+    fun isLoggedInAs(): String {
+        return authRepository.isLoggedInAs()
+    }
+
     fun login(email: String, password: String): Task<AuthResult> {
         return authRepository.login(email, password)
     }
@@ -27,5 +31,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         return authRepository.logout()
     }
 
-    fun sendPasswordResetMail() {}
+    fun sendPasswordResetMail(email: String): Task<Void> {
+        return authRepository.sendPasswordResetMail(email)
+    }
 }

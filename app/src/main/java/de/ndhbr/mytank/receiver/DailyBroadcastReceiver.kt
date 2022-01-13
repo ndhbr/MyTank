@@ -66,6 +66,7 @@ class DailyBroadcastReceiver : BroadcastReceiver() {
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSmallIcon(R.drawable.ic_baseline_alarm_24)
             .setContentIntent(pendingIntent)
             .setVibrate(
                 longArrayOf(

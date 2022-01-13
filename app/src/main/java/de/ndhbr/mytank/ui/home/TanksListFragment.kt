@@ -18,6 +18,8 @@ import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.viewmodels.TanksViewModel
 import kotlin.collections.ArrayList
 import android.content.DialogInterface
+import androidx.core.view.size
+import de.ndhbr.mytank.utilities.Constants
 
 class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
 
@@ -61,6 +63,13 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
             } else {
                 binding.llNoTanksHint.visibility = View.GONE
                 binding.rvList.visibility = View.VISIBLE
+            }
+
+            // max number of tanks
+            if (binding.rvList.size >= Constants.MAX_TANKS) {
+                binding.fabAddTest.visibility = View.GONE
+            } else {
+                binding.fabAddTest.visibility = View.VISIBLE
             }
 
             tankAdapter.updateData(tanks as ArrayList<Tank>)

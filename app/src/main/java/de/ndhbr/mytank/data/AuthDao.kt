@@ -1,5 +1,6 @@
 package de.ndhbr.mytank.data
 
+import android.provider.ContactsContract
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +15,11 @@ class AuthDao {
     // Checks if user is logged in
     fun isLoggedIn(): Boolean {
         return auth.currentUser != null
+    }
+
+    // Returns a the logged in mail address
+    fun isLoggedInAs(): String? {
+        return auth.currentUser?.email
     }
 
     // Requires signed in user
@@ -44,6 +50,11 @@ class AuthDao {
 
     // Logout
     fun logout() {
-        return auth.signOut()
+        auth.signOut()
+    }
+
+    // Sends password reset mail to given email address
+    fun sendPasswordResetMail(email: String): Task<Void> {
+        return auth.sendPasswordResetEmail(email)
     }
 }

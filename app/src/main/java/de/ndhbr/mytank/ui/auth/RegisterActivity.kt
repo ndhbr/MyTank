@@ -10,6 +10,7 @@ import de.ndhbr.mytank.R
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.databinding.ActivityRegisterBinding
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.AuthViewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         initializeUi(viewModel)
     }
 
-    override fun onSupportNavigateUp(): kotlin.Boolean {
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
@@ -51,19 +52,17 @@ class RegisterActivity : AppCompatActivity() {
 
             when {
                 TextUtils.isEmpty(email) -> {
-                    Toast.makeText(
+                    ToastUtilities.showShortToast(
                         this@RegisterActivity,
                         getString(R.string.form_error_register_mail_input),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    )
                 }
 
                 TextUtils.isEmpty(password) -> {
-                    Toast.makeText(
+                    ToastUtilities.showShortToast(
                         this@RegisterActivity,
                         getString(R.string.form_error_register_password_input),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    )
                 }
 
                 else -> {
@@ -72,11 +71,10 @@ class RegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 val firebaseUser = task.result!!.user!!
 
-                                Toast.makeText(
+                                ToastUtilities.showShortToast(
                                     this@RegisterActivity,
-                                    "You are registered successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    getString(R.string.you_are_registered_successfully)
+                                )
 
                                 // Send to main screen
                                 val intent =
@@ -87,11 +85,10 @@ class RegisterActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             } else {
-                                Toast.makeText(
+                                ToastUtilities.showLongToast(
                                     this@RegisterActivity,
                                     task.exception!!.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                )
                             }
                         }
                 }

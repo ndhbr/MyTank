@@ -8,22 +8,23 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import de.ndhbr.mytank.models.ItemAlarm
 import de.ndhbr.mytank.models.User
+import de.ndhbr.mytank.utilities.Constants
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ItemAlarmDao constructor(
-    private val firestore: FirebaseFirestore,
-    private val user: User
+    private val firestore: FirebaseFirestore
 ) {
-    private val TAG = "ITEM_ALARM_DAO"
 
-    private val itemAlarmList = mutableListOf<ItemAlarm>()
+    // Live data list
     private val itemAlarms = MutableLiveData<List<ItemAlarm>>()
 
     // Adds item alarm
     fun addItemAlarm(itemAlarm: ItemAlarm): Task<DocumentReference> {
+        val user = AuthDao().user()
+
         itemAlarm.userId = user.userId
         return firestore
             .collection("/alarms")
@@ -52,11 +53,13 @@ class ItemAlarmDao constructor(
 
     // Searches for live item alarms by user
     fun getItemAlarms(): LiveData<List<ItemAlarm>> {
+        val user = AuthDao().user()
+
         firestore
             .collection("/alarms")
             .whereEqualTo("userId", user.userId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .limit(1000) // TODO: Set max or infinite scroll
+            .limit(Constants.MAX_ALARMS)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     itemAlarms.value = ArrayList()
@@ -81,11 +84,12 @@ class ItemAlarmDao constructor(
     // Searches for item alarms by user
     suspend fun getItemAlarmsList(): List<ItemAlarm> {
         val result = ArrayList<ItemAlarm>()
+        val user = AuthDao().user()
 
         val snapshot = firestore
             .collection("/alarms")
             .whereEqualTo("userId", user.userId)
-            .limit(1000) // TODO
+            .limit(Constants.MAX_ALARMS)
             .get()
             .await()
 
@@ -107,13 +111,14 @@ class ItemAlarmDao constructor(
     suspend fun getCurrentAlarmsList(): List<ItemAlarm> {
         val calendar = Calendar.getInstance()
         val result = ArrayList<ItemAlarm>()
+        val user = AuthDao().user()
 
         val snapshot = firestore
             .collection("/alarms")
             .whereEqualTo("userId", user.userId)
             .whereEqualTo("hour", calendar.get(Calendar.HOUR_OF_DAY))
             .whereArrayContains("days", calendar.get(Calendar.DAY_OF_WEEK))
-            .limit(1000) // TODO
+            .limit(Constants.MAX_ALARMS)
             .get()
             .await()
 
