@@ -2,6 +2,7 @@ package de.ndhbr.mytank.repositories
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.GoogleAuthProvider
 import de.ndhbr.mytank.data.AuthDao
 
 class AuthRepository private constructor(private val authDao: AuthDao) {
@@ -16,6 +17,11 @@ class AuthRepository private constructor(private val authDao: AuthDao) {
 
     fun login(email: String, password: String): Task<AuthResult> {
         return authDao.login(email, password)
+    }
+
+    fun loginWithGoogle(idToken: String): Task<AuthResult> {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        return authDao.loginWithCredential(credential)
     }
 
     fun loginAnonymously(): Task<AuthResult> {

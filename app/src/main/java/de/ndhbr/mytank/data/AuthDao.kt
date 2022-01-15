@@ -2,6 +2,7 @@ package de.ndhbr.mytank.data
 
 import android.provider.ContactsContract
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -36,6 +37,11 @@ class AuthDao {
     // Login with email + password
     fun login(email: String, password: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(email, password)
+    }
+
+    // Login with credential
+    fun loginWithCredential(credential: AuthCredential): Task<AuthResult> {
+        return auth.signInWithCredential(credential)
     }
 
     // Login anonymously without email + password

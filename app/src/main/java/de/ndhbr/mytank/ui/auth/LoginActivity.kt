@@ -1,5 +1,6 @@
 package de.ndhbr.mytank.ui.auth
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,8 +10,12 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -55,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
         buildLoginButton(viewModel)
         buildLoginAnonymouslyButton(viewModel)
         buildRegisterButton()
+        buildGoogleLoginButton(viewModel)
     }
 
     // Password forgot button
@@ -149,6 +155,37 @@ class LoginActivity : AppCompatActivity() {
             )
 
             startActivity(intent)
+        }
+    }
+
+    // Google login button
+    private fun buildGoogleLoginButton(viewModel: AuthViewModel) {
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+                    try {
+                        val account = task.getResult(ApiException::class.java)!!
+                        viewModel.loginWithGoogle(account.idToken!!)
+                            .addOnCompleteListener { authResult -> handleAuthResult(authResult) }
+                    } catch (e: ApiException) {
+                        ToastUtilities.showShortToast(this,
+                            "Error! Please try again later")
+                    }
+                }
+            }
+
+        binding.cvGoogleLogin.setOnClickListener {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.request_id_token))
+                .requestEmail()
+                .build()
+            val signInClient = GoogleSignIn.getClient(this, gso)
+            val signInIntent: Intent = signInClient.signInIntent
+
+            resultLauncher.launch(signInIntent)
         }
     }
 

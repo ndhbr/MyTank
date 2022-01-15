@@ -119,4 +119,6 @@
     <string name="form_error_forgot_password_email_input">Please enter your email address</string>
     <string name="please_enter_your_email">Please enter your email</string>
     <string name="please_enter_your_password">Please enter your password</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="request_id_token">827726308689-vnt8d9hb6ort384ktc0n1n351n14uj72.apps.googleusercontent.com</string>
 </resources>
