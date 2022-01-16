@@ -55,8 +55,9 @@ class TanksDao constructor(
     }
 
     // Delete tank in database
+    @Throws(Exception::class)
     fun removeTankById(tankId: String): Task<Void> {
-        if (!tankId.isNullOrEmpty()) {
+        if (tankId.isNotEmpty()) {
             return firestore.collection("/tanks").document(tankId).delete()
         }
 

@@ -1,5 +1,6 @@
 package de.ndhbr.mytank.ui.home
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -43,6 +44,7 @@ class TankActivity : AppCompatActivity(), TankItemListener {
     private lateinit var tank: Tank
     private lateinit var tanksViewModel: TanksViewModel
     private lateinit var tankItemsViewModel: TankItemsViewModel
+    private lateinit var editTankIntentLauncher: ActivityResultLauncher<Intent>
 
     // Images
     private val imageStorage = ImageStorage.getInstance()
@@ -55,19 +57,12 @@ class TankActivity : AppCompatActivity(), TankItemListener {
         binding = ActivityTankBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Activity parameters
-        intent.getParcelableExtra<Tank>("tank").also {
-            if (it != null) {
-                tank = it
-                supportActionBar?.title = tank.name
-            }
-        }
-
-        // Tank image picker result
+        // Intent results
         registerTankImageResult()
+        registerEditTankResult()
 
-        // UI
-        initializeUi()
+        // Build UI
+        initializeUi(intent)
     }
 
     override fun onDestroy() {
@@ -95,13 +90,21 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                 AddUpdateTankActivity::class.java
             )
             intent.putExtra("tank", tank)
-            startActivity(intent)
+            editTankIntentLauncher.launch(intent)
             true
         }
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun initializeUi() {
+    private fun initializeUi(intent: Intent) {
+        // Activity parameters
+        intent.getParcelableExtra<Tank>("tank").also {
+            if (it != null) {
+                tank = it
+                supportActionBar?.title = tank.name
+            }
+        }
+
         // Tanks
         val tanksViewModelFactory = InjectorUtils.provideTanksViewModelFactory()
         tanksViewModel = ViewModelProvider(this, tanksViewModelFactory)
@@ -192,6 +195,21 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                     }
             }
         }
+    }
+
+    private fun registerEditTankResult() {
+        editTankIntentLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+
+                    if (data != null) {
+                        initializeUi(data)
+                    }
+                }
+            }
     }
 
     private fun onTankImageClick(view: View) {

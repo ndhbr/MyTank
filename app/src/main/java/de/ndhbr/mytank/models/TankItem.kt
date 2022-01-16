@@ -3,11 +3,12 @@ package de.ndhbr.mytank.models
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
 import de.ndhbr.mytank.enum.TankItemType
 import java.util.*
 
 data class TankItem(
-    var tankItemId: String? = "",
+    @get:Exclude var tankItemId: String? = "",
     var name: String? = "",
     var type: TankItemType? = TankItemType.FISH,
     var count: Int = 1,

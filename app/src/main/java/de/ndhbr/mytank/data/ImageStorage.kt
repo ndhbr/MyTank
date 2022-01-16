@@ -25,8 +25,8 @@ class ImageStorage private constructor() {
     }
 
     // Remove image by path
-    suspend fun removeImage(path: String): Void {
-        return reference.child(path).delete().await()
+    fun removeImage(path: String): Task<Void> {
+        return reference.child(path).delete()
     }
 
     companion object {

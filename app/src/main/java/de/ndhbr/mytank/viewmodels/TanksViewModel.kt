@@ -12,6 +12,7 @@ import de.ndhbr.mytank.repositories.ItemAlarmRepository
 import de.ndhbr.mytank.repositories.TanksRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class TanksViewModel(
@@ -35,9 +36,11 @@ class TanksViewModel(
             // fit into a Kotlin course.
             try {
                 if (tank.hasImage == true) {
-                    ImageStorage.getInstance().removeImage("${tank.tankId!!}.jpg")
+                    ImageStorage.getInstance().removeImage("${tank.tankId}.jpg")
+                        .await()
                 }
-            } catch (e: StorageException) { }
+            } catch (e: StorageException) {
+            }
             alarmRepository.removeAlarmsByTankId(tank.tankId!!)
         }
     }

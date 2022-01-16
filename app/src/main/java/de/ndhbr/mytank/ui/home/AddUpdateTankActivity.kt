@@ -1,6 +1,7 @@
 package de.ndhbr.mytank.ui.home
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -128,6 +129,9 @@ class AddUpdateTankActivity : AppCompatActivity() {
                             viewModel.addTank(newTank)
                         }
 
+                        val intent = Intent()
+                        intent.putExtra("tank", newTank)
+                        setResult(RESULT_OK, intent)
                         finish()
                     }
                 }
