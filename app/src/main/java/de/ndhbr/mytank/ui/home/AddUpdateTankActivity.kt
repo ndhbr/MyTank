@@ -32,6 +32,7 @@ class AddUpdateTankActivity : AppCompatActivity() {
             editTank = intent.getParcelableExtra<Tank>("tank")!!
 
             with(binding) {
+                tvHeadline.text = resources.getText(R.string.edit_your_fish_tank)
                 etTankName.setText(editTank.name)
                 editTank.size?.let { etTankSize.setText(it.toString()) }
                 editTank.existsSince?.let {

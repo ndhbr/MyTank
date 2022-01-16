@@ -164,11 +164,7 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                 val imageStorage = ImageStorage.getInstance()
                 binding.pbImageUpload.visibility = View.VISIBLE
 
-                val storageRef = imageStorage.storage.reference
-                val mountainsRef = storageRef.child("${tank.tankId}.jpg")
-                uploadTask = mountainsRef.putFile(result.data!!.data!!)
-
-                uploadTask!!
+                imageStorage.uploadFile("${tank.tankId}.jpg", result.data!!.data!!)
                     .addOnFailureListener { exception ->
                         // TODO: Progress bar red?
                         Log.e(TAG, exception.toString())
@@ -184,8 +180,10 @@ class TankActivity : AppCompatActivity(), TankItemListener {
 
                         // Update header image preview
                         t.storage.downloadUrl.addOnSuccessListener { uri ->
-                            ImageUtils.loadOnlineImageSource(this, binding.ivHeaderImage,
-                                uri)
+                            ImageUtils.loadOnlineImageSource(
+                                this, binding.ivHeaderImage,
+                                uri
+                            )
                         }
                     }
                     .addOnProgressListener { progress ->

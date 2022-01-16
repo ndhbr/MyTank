@@ -19,6 +19,14 @@ class ItemAlarmRepository private constructor(
     fun removeItemAlarmById(itemAlarmId: String) =
         itemAlarmDao.removeItemAlarmById(itemAlarmId)
 
+    // Remove item alarms by tank
+    suspend fun removeAlarmsByTankId(tankId: String) =
+        itemAlarmDao.removeAlarmsByTankId(tankId)
+
+    // Remove item alarms by tank item
+    suspend fun removeAlarmsByTankItemId(tankId: String, tankItemId: String) =
+        itemAlarmDao.removeAlarmsByTankItemId(tankId, tankItemId)
+
     // Get live item alarms by user id
     fun getItemAlarms() = itemAlarmDao.getItemAlarms()
 

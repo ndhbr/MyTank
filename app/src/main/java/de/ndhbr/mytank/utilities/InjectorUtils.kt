@@ -19,14 +19,18 @@ object InjectorUtils {
 
     fun provideTanksViewModelFactory(): TanksViewModelFactory {
         val tankRepository = TanksRepository.getInstance(Database.getInstance().tanksDao)
-        return TanksViewModelFactory(tankRepository)
+        val alarmRepository =
+            ItemAlarmRepository.getInstance(Database.getInstance().itemAlarmDao)
+        return TanksViewModelFactory(tankRepository, alarmRepository)
     }
 
     fun provideTankItemsViewModelFactory(): TankItemsViewModelFactory {
         val tankItemsRepository = TankItemsRepository.getInstance(
             Database.getInstance().tankItemsDao
         )
-        return TankItemsViewModelFactory(tankItemsRepository)
+        val alarmRepository =
+            ItemAlarmRepository.getInstance(Database.getInstance().itemAlarmDao)
+        return TankItemsViewModelFactory(tankItemsRepository, alarmRepository)
     }
 
     fun provideItemAlarmViewModelFactory(): ItemAlarmViewModelFactory {
@@ -40,7 +44,9 @@ object InjectorUtils {
         val tankItemsRepository = TankItemsRepository.getInstance(
             database.tankItemsDao
         )
-        return ItemAlarmViewModelFactory(itemAlarmRepository,
-            tanksRepository, tankItemsRepository)
+        return ItemAlarmViewModelFactory(
+            itemAlarmRepository,
+            tanksRepository, tankItemsRepository
+        )
     }
 }

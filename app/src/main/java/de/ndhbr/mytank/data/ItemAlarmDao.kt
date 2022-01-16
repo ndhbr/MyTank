@@ -51,6 +51,37 @@ class ItemAlarmDao constructor(
             .delete()
     }
 
+    // Remove item alarms by tank id
+    suspend fun removeAlarmsByTankId(tankId: String) {
+        val snapshot = firestore
+            .collection("/alarms")
+            .whereEqualTo("tankId", tankId)
+            .get()
+            .await()
+
+        if (!snapshot.isEmpty) {
+            for (doc in snapshot.documents) {
+                doc.reference.delete().await()
+            }
+        }
+    }
+
+    // Remove item alarms by tank item id
+    suspend fun removeAlarmsByTankItemId(tankId: String, tankItemId: String) {
+        val snapshot = firestore
+            .collection("/alarms")
+            .whereEqualTo("tankId", tankId)
+            .whereEqualTo("tankItemId", tankItemId)
+            .get()
+            .await()
+
+        if (!snapshot.isEmpty) {
+            for (doc in snapshot.documents) {
+                doc.reference.delete().await()
+            }
+        }
+    }
+
     // Searches for live item alarms by user
     fun getItemAlarms(): LiveData<List<ItemAlarm>> {
         val user = AuthDao().user()

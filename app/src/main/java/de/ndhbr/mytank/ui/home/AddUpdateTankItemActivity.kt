@@ -180,7 +180,6 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
                             }
 
                             finish()
-                            // TODO: Finish with result, update data
                         }
                     }
                 }

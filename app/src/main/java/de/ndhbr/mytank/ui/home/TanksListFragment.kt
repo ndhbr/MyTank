@@ -20,6 +20,9 @@ import kotlin.collections.ArrayList
 import android.content.DialogInterface
 import androidx.core.view.size
 import de.ndhbr.mytank.utilities.Constants
+import de.ndhbr.mytank.utilities.ToastUtilities
+import kotlinx.coroutines.CoroutineExceptionHandler
+import java.lang.Exception
 
 class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
 
@@ -75,7 +78,7 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
             tankAdapter.updateData(tanks as ArrayList<Tank>)
         })
 
-        // button setonclicklistener...
+        // New tank button
         binding.fabAddTest.setOnClickListener {
             val intent = Intent(activity, AddUpdateTankActivity::class.java)
             startActivity(intent)
@@ -90,10 +93,18 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
 
     override fun onTankLongPress(tank: Tank): Boolean {
         val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> {
-                        tank.tankId?.let { viewModel.removeTankById(it) }
+                        if (tank.tankId != null) {
+                            viewModel.removeTank(
+                                tank,
+                                CoroutineExceptionHandler { _, throwable ->
+                                    throwable.message?.let {
+                                        ToastUtilities.showShortToast(context!!, it)
+                                    }
+                                })
+                        }
                     }
                     DialogInterface.BUTTON_NEGATIVE -> {}
                 }

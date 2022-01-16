@@ -41,6 +41,19 @@ class TanksDao constructor(
         throw Exception("Missing tankId")
     }
 
+    // Checks wether the tank has items left
+    suspend fun hasTankItems(tankId: String): Boolean {
+        val snapshot = firestore
+            .collection("/tanks")
+            .document(tankId)
+            .collection("/items")
+            .limit(1)
+            .get()
+            .await()
+
+        return !snapshot.isEmpty
+    }
+
     // Delete tank in database
     fun removeTankById(tankId: String): Task<Void> {
         if (!tankId.isNullOrEmpty()) {
