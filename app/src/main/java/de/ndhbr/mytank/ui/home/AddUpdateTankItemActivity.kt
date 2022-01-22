@@ -1,6 +1,7 @@
 package de.ndhbr.mytank.ui.home
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityAddUpdateTankItemBinding
 import de.ndhbr.mytank.enum.TankItemType
 import de.ndhbr.mytank.models.TankItem
+import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.DateUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.utilities.ToastUtilities
@@ -37,13 +39,13 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // To which tank should the item belong
-        if (intent.hasExtra("tank-id")) {
-            tankId = intent.getStringExtra("tank-id")!!
+        if (intent.hasExtra(Constants.ACTIVITY_PARAM_TANK_ID)) {
+            tankId = intent.getStringExtra(Constants.ACTIVITY_PARAM_TANK_ID)!!
         }
 
         // Prefill tank item for editing
-        if (intent.hasExtra("tank-item")) {
-            editTankItem = intent.getParcelableExtra<TankItem>("tank-item")!!
+        if (intent.hasExtra(Constants.ACTIVITY_PARAM_TANK_ITEM)) {
+            editTankItem = intent.getParcelableExtra<TankItem>(Constants.ACTIVITY_PARAM_TANK_ITEM)!!
 
             with(binding) {
                 etAddUpdateTankItemName.setText(editTankItem.name)
@@ -96,7 +98,7 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
                 actvTankItemType.setAdapter(adapter)
             }
             actvTankItemType.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
+                AdapterView.OnItemClickListener { _, _, position, _ ->
                     newTankItem.type = TankItemType.values()[position]
                 }
 
@@ -179,6 +181,9 @@ class AddUpdateTankItemActivity : AppCompatActivity() {
                                 viewModel.addTankItem(tankId, newTankItem)
                             }
 
+                            val intent = Intent()
+                            intent.putExtra(Constants.ACTIVITY_PARAM_TANK_ITEM, newTankItem)
+                            setResult(RESULT_OK, intent)
                             finish()
                         }
                     }

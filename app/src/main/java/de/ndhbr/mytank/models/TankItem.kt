@@ -12,6 +12,7 @@ data class TankItem(
     var name: String? = "",
     var type: TankItemType? = TankItemType.FISH,
     var count: Int = 1,
+    var hasImage: Boolean? = false,
     var existsSince: Date? = Timestamp.now().toDate(),
     val createdAt: Timestamp? = Timestamp.now()
 ) : Parcelable {
@@ -20,6 +21,7 @@ data class TankItem(
         parcel.readString(),
         TankItemType.valueOf(parcel.readString()!!),
         parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
         Date(parcel.readLong()),
         parcel.readParcelable(Timestamp::class.java.classLoader)
     ) {
@@ -34,6 +36,7 @@ data class TankItem(
         parcel.writeString(name)
         parcel.writeString(type?.name)
         parcel.writeInt(count)
+        parcel.writeByte(if (hasImage == true) 1.toByte() else 0.toByte())
         existsSince?.let { parcel.writeLong(it.time) }
         parcel.writeParcelable(createdAt, flags)
     }

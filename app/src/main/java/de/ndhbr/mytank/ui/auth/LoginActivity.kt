@@ -9,18 +9,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import de.ndhbr.mytank.R
-import de.ndhbr.mytank.data.Database
 import de.ndhbr.mytank.databinding.ActivityLoginBinding
 import de.ndhbr.mytank.ui.home.OverviewActivity
 import de.ndhbr.mytank.utilities.AlarmUtils
@@ -128,14 +124,11 @@ class LoginActivity : AppCompatActivity() {
     // Auth Result handler (for login)
     private fun handleAuthResult(task: Task<AuthResult>) {
         if (task.isSuccessful) {
-            val firebaseUser = task.result!!.user!!
-
             // Send to main screen
             val intent =
                 Intent(this@LoginActivity, OverviewActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intent.putExtra("user_id", firebaseUser.uid)
             startActivity(intent)
             finish()
         } else {

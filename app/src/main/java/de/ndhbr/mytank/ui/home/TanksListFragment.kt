@@ -87,7 +87,7 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
 
     override fun onTankClick(tank: Tank) {
         val launcherIntent = Intent(activity, TankActivity::class.java)
-        launcherIntent.putExtra("tank", tank)
+        launcherIntent.putExtra(Constants.ACTIVITY_PARAM_TANK, tank)
         startActivity(launcherIntent)
     }
 
@@ -99,6 +99,7 @@ class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
                         if (tank.tankId != null) {
                             viewModel.removeTank(
                                 tank,
+                                context!!,
                                 CoroutineExceptionHandler { _, throwable ->
                                     throwable.message?.let {
                                         ToastUtilities.showShortToast(context!!, it)

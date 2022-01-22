@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import de.ndhbr.mytank.R
 import de.ndhbr.mytank.data.AuthDao
 import de.ndhbr.mytank.ui.auth.LoginActivity
 import de.ndhbr.mytank.ui.home.OverviewActivity
@@ -13,6 +14,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val authDao = AuthDao()
+        window.statusBarColor = getColor(R.color.purple_700)
 
         if (authDao.isLoggedIn()) {
             startActivity(Intent(this, OverviewActivity::class.java))

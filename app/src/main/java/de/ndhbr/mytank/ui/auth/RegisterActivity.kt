@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.R
 import de.ndhbr.mytank.ui.home.OverviewActivity
@@ -69,8 +68,6 @@ class RegisterActivity : AppCompatActivity() {
                     viewModel.register(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                val firebaseUser = task.result!!.user!!
-
                                 ToastUtilities.showShortToast(
                                     this@RegisterActivity,
                                     getString(R.string.you_are_registered_successfully)
@@ -81,7 +78,6 @@ class RegisterActivity : AppCompatActivity() {
                                     Intent(this@RegisterActivity, OverviewActivity::class.java)
                                 intent.flags =
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                intent.putExtra("user_id", firebaseUser.uid)
                                 startActivity(intent)
                                 finish()
                             } else {

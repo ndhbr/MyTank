@@ -12,6 +12,7 @@ import de.ndhbr.mytank.databinding.ActivityAddUpdateItemAlarmBinding
 import de.ndhbr.mytank.models.ItemAlarm
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.models.TankItem
+import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.ItemAlarmViewModel
@@ -44,8 +45,8 @@ class AddUpdateItemAlarmActivity : AppCompatActivity() {
 
     // Prefill item alarm for editing
     private fun prefillInputs() {
-        if (intent.hasExtra("alarm")) {
-            itemAlarm = intent.getParcelableExtra<ItemAlarm>("alarm")!!
+        if (intent.hasExtra(Constants.ACTIVITY_PARAM_ALARM)) {
+            itemAlarm = intent.getParcelableExtra<ItemAlarm>(Constants.ACTIVITY_PARAM_ALARM)!!
 
             with(binding) {
                 if (itemAlarm.days != null) {

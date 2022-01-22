@@ -122,4 +122,10 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="request_id_token">827726308689-vnt8d9hb6ort384ktc0n1n351n14uj72.apps.googleusercontent.com</string>
     <string name="edit_your_fish_tank">Edit your fish tank</string>
+    <string name="title_activity_tank_item">TankItemActivity</string>
+    <string name="edit_tank_item">Edit tank item</string>
+    <!-- Firebase Storage paths -->
+    <string name="fb_storage_tanks">%1$s.jpg</string>
+    <string name="fb_storage_tank_items">tank-items/%1$s.jpg</string>
+    <string name="if_you_have_forgotten_your_password_you_can_request_a_password_reset_link_here">If you have forgotten your password, you can request a password reset link here.</string>
 </resources>

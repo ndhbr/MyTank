@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityAddTankBinding
 import de.ndhbr.mytank.models.Tank
+import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.DateUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.utilities.ToastUtilities
@@ -29,8 +30,8 @@ class AddUpdateTankActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Prefill tank for editing
-        if (intent.hasExtra("tank")) {
-            editTank = intent.getParcelableExtra<Tank>("tank")!!
+        if (intent.hasExtra(Constants.ACTIVITY_PARAM_TANK)) {
+            editTank = intent.getParcelableExtra<Tank>(Constants.ACTIVITY_PARAM_TANK)!!
 
             with(binding) {
                 tvHeadline.text = resources.getText(R.string.edit_your_fish_tank)
@@ -130,7 +131,7 @@ class AddUpdateTankActivity : AppCompatActivity() {
                         }
 
                         val intent = Intent()
-                        intent.putExtra("tank", newTank)
+                        intent.putExtra(Constants.ACTIVITY_PARAM_TANK, newTank)
                         setResult(RESULT_OK, intent)
                         finish()
                     }

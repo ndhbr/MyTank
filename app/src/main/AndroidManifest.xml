@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTank">
         <activity
+            android:name=".ui.home.TankItemActivity"
+            android:exported="false"
+            android:label="@string/title_activity_tank_item" />
+        <activity
             android:name=".ui.auth.ForgotPasswordActivity"
             android:exported="false" />
         <activity
@@ -40,8 +44,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

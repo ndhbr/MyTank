@@ -23,13 +23,13 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.size
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.storage.UploadTask
 import de.ndhbr.mytank.data.ImageStorage
 import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.ImageUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.TanksViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 
 class TankActivity : AppCompatActivity(), TankItemListener {
@@ -89,7 +89,7 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                 this@TankActivity,
                 AddUpdateTankActivity::class.java
             )
-            intent.putExtra("tank", tank)
+            intent.putExtra(Constants.ACTIVITY_PARAM_TANK, tank)
             editTankIntentLauncher.launch(intent)
             true
         }
@@ -98,7 +98,7 @@ class TankActivity : AppCompatActivity(), TankItemListener {
 
     private fun initializeUi(intent: Intent) {
         // Activity parameters
-        intent.getParcelableExtra<Tank>("tank").also {
+        intent.getParcelableExtra<Tank>(Constants.ACTIVITY_PARAM_TANK).also {
             if (it != null) {
                 tank = it
                 supportActionBar?.title = tank.name
@@ -142,18 +142,23 @@ class TankActivity : AppCompatActivity(), TankItemListener {
 
         // New tank item
         binding.fabAddTankItem.setOnClickListener {
-            val intent = Intent(this, AddUpdateTankItemActivity::class.java)
-            intent.putExtra("tank-id", tank.tankId)
-            startActivity(intent)
+            val i = Intent(this, AddUpdateTankItemActivity::class.java)
+            i.putExtra(Constants.ACTIVITY_PARAM_TANK_ID, tank.tankId)
+            startActivity(i)
         }
 
         // Size circle
         binding.tvTankSize.text = "${tank.size.toString()}l"
 
         // Tank image
-        binding.ivHeaderImage.setOnClickListener { onTankImageClick(it) }
+        binding.ivHeaderImage.setOnClickListener { onTankImageClick() }
         if (tank.hasImage == true) {
-            imageStorage.getImage(tank.tankId + ".jpg").addOnSuccessListener { uri ->
+            imageStorage.getImage(
+                String.format(
+                    resources.getString(R.string.fb_storage_tanks),
+                    tank.tankId
+                )
+            ).addOnSuccessListener { uri ->
                 ImageUtils.loadOnlineImageSource(this, binding.ivHeaderImage, uri)
             }
         }
@@ -167,7 +172,12 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                 val imageStorage = ImageStorage.getInstance()
                 binding.pbImageUpload.visibility = View.VISIBLE
 
-                imageStorage.uploadFile("${tank.tankId}.jpg", result.data!!.data!!)
+                imageStorage.uploadFile(
+                    String.format(
+                        resources.getString(R.string.fb_storage_tanks),
+                        tank.tankId
+                    ), result.data!!.data!!
+                )
                     .addOnFailureListener { exception ->
                         Log.e(TAG, exception.toString())
                     }
@@ -211,14 +221,14 @@ class TankActivity : AppCompatActivity(), TankItemListener {
             }
     }
 
-    private fun onTankImageClick(view: View) {
+    private fun onTankImageClick() {
         ImageUtils.showImagePicker(imageIntentLauncher)
     }
 
     override fun onTankItemClick(tankItem: TankItem) {
-        val intent = Intent(this, AddUpdateTankItemActivity::class.java)
-        intent.putExtra("tank-id", tank.tankId)
-        intent.putExtra("tank-item", tankItem)
+        val intent = Intent(this, TankItemActivity::class.java)
+        intent.putExtra(Constants.ACTIVITY_PARAM_TANK_ID, tank.tankId)
+        intent.putExtra(Constants.ACTIVITY_PARAM_TANK_ITEM, tankItem)
         startActivity(intent)
     }
 
@@ -232,8 +242,15 @@ class TankActivity : AppCompatActivity(), TankItemListener {
                         ) {
                             tankItemsViewModel.removeTankItemById(
                                 tank.tankId!!,
-                                tankItem.tankItemId!!
-                            )
+                                tankItem,
+                                this@TankActivity,
+                                CoroutineExceptionHandler { _, throwable ->
+                                    throwable.message?.let {
+                                        ToastUtilities.showShortToast(
+                                            this@TankActivity, it
+                                        )
+                                    }
+                                })
                         }
                     }
                     DialogInterface.BUTTON_NEGATIVE -> {}
