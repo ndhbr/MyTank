@@ -27,9 +27,9 @@ class TankItemsDao constructor(
     // Add tank item to tank
     fun addTankItem(tankId: String, tankItem: TankItem): Task<DocumentReference> {
         return firestore
-            .collection("/tanks")
+            .collection(Constants.COL_TANKS)
             .document(tankId)
-            .collection("/items")
+            .collection(Constants.COL_TANK_ITEMS)
             .add(tankItem)
     }
 
@@ -37,9 +37,9 @@ class TankItemsDao constructor(
     fun updateTank(tankId: String, tankItem: TankItem): Task<Void> {
         if (tankId.isNotEmpty() && !tankItem.tankItemId.isNullOrEmpty()) {
             return firestore
-                .collection("/tanks")
+                .collection(Constants.COL_TANKS)
                 .document(tankId)
-                .collection("/items")
+                .collection(Constants.COL_TANK_ITEMS)
                 .document(tankItem.tankItemId!!)
                 .set(tankItem)
         }
@@ -51,9 +51,9 @@ class TankItemsDao constructor(
     fun removeTankItemById(tankId: String, tankItemId: String): Task<Void> {
         if (!tankId.isNullOrEmpty() && !tankItemId.isNullOrEmpty()) {
             return firestore
-                .collection("/tanks")
+                .collection(Constants.COL_TANKS)
                 .document(tankId)
-                .collection("/items")
+                .collection(Constants.COL_TANK_ITEMS)
                 .document(tankItemId)
                 .delete()
         }
@@ -64,9 +64,9 @@ class TankItemsDao constructor(
     // Get a live list of items belonging to a tank
     fun getTankItemsByTankId(tankId: String): LiveData<List<TankItem>> {
         firestore
-            .collection("/tanks")
+            .collection(Constants.COL_TANKS)
             .document(tankId)
-            .collection("/items")
+            .collection(Constants.COL_TANK_ITEMS)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .limit(Constants.MAX_DIFFERENT_TANK_ITEMS)
             .addSnapshotListener { value, error ->
@@ -96,9 +96,9 @@ class TankItemsDao constructor(
         val result = ArrayList<TankItem>()
 
         val snapshot = firestore
-            .collection("/tanks")
+            .collection(Constants.COL_TANKS)
             .document(tankId)
-            .collection("/items")
+            .collection(Constants.COL_TANK_ITEMS)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .limit(Constants.MAX_DIFFERENT_TANK_ITEMS)
             .get()

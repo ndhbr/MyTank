@@ -17,7 +17,6 @@ import kotlin.collections.ArrayList
 class ItemAlarmDao constructor(
     private val firestore: FirebaseFirestore
 ) {
-
     // Live data list
     private val itemAlarms = MutableLiveData<List<ItemAlarm>>()
 
@@ -27,7 +26,7 @@ class ItemAlarmDao constructor(
 
         itemAlarm.userId = user.userId
         return firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .add(itemAlarm)
     }
 
@@ -38,7 +37,7 @@ class ItemAlarmDao constructor(
         }
 
         return firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .document(itemAlarm.itemAlarmId!!)
             .set(itemAlarm)
     }
@@ -46,7 +45,7 @@ class ItemAlarmDao constructor(
     // Remove item alarm by id
     fun removeItemAlarmById(itemAlarmId: String): Task<Void> {
         return firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .document(itemAlarmId)
             .delete()
     }
@@ -54,7 +53,7 @@ class ItemAlarmDao constructor(
     // Remove item alarms by tank id
     suspend fun removeAlarmsByTankId(tankId: String) {
         val snapshot = firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .whereEqualTo("tankId", tankId)
             .get()
             .await()
@@ -69,7 +68,7 @@ class ItemAlarmDao constructor(
     // Remove item alarms by tank item id
     suspend fun removeAlarmsByTankItemId(tankId: String, tankItemId: String) {
         val snapshot = firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .whereEqualTo("tankId", tankId)
             .whereEqualTo("tankItemId", tankItemId)
             .get()
@@ -87,7 +86,7 @@ class ItemAlarmDao constructor(
         val user = AuthDao().user()
 
         firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .whereEqualTo("userId", user.userId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .limit(Constants.MAX_ALARMS)
@@ -118,7 +117,7 @@ class ItemAlarmDao constructor(
         val user = AuthDao().user()
 
         val snapshot = firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .whereEqualTo("userId", user.userId)
             .limit(Constants.MAX_ALARMS)
             .get()
@@ -145,7 +144,7 @@ class ItemAlarmDao constructor(
         val user = AuthDao().user()
 
         val snapshot = firestore
-            .collection("/alarms")
+            .collection(Constants.COL_ALARMS)
             .whereEqualTo("userId", user.userId)
             .whereEqualTo("hour", calendar.get(Calendar.HOUR_OF_DAY))
             .whereArrayContains("days", calendar.get(Calendar.DAY_OF_WEEK))

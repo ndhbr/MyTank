@@ -169,7 +169,6 @@ class TankActivity : AppCompatActivity(), TankItemListener {
 
                 imageStorage.uploadFile("${tank.tankId}.jpg", result.data!!.data!!)
                     .addOnFailureListener { exception ->
-                        // TODO: Progress bar red?
                         Log.e(TAG, exception.toString())
                     }
                     .addOnSuccessListener { t ->
