@@ -2,7 +2,6 @@ package de.ndhbr.mytank.repositories
 
 import de.ndhbr.mytank.models.Tank
 import de.ndhbr.mytank.data.TanksDao
-import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 
 class TanksRepository private constructor(private val tanksDao: TanksDao) {

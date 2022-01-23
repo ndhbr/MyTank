@@ -1,6 +1,5 @@
 package de.ndhbr.mytank.data
 
-import android.provider.ContactsContract
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult

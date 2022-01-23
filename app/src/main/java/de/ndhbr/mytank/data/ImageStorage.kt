@@ -3,10 +3,7 @@ package de.ndhbr.mytank.data
 import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.UploadTask
-import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 
 class ImageStorage private constructor() {
     // Firebase storage instance

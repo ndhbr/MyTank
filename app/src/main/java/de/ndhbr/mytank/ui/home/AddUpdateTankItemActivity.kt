@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
@@ -18,7 +17,6 @@ import de.ndhbr.mytank.utilities.DateUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
 import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.TankItemsViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddUpdateTankItemActivity : AppCompatActivity() {

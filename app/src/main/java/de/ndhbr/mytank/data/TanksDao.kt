@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import de.ndhbr.mytank.models.Tank
-import de.ndhbr.mytank.models.User
 import de.ndhbr.mytank.utilities.Constants
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception

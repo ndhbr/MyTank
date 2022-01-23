@@ -8,9 +8,7 @@ import de.ndhbr.mytank.models.TankItem
 import de.ndhbr.mytank.repositories.ItemAlarmRepository
 import de.ndhbr.mytank.repositories.TankItemsRepository
 import de.ndhbr.mytank.repositories.TanksRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 class ItemAlarmViewModel(
     private val itemAlarmRepository: ItemAlarmRepository,

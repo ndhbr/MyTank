@@ -1,7 +1,6 @@
 package de.ndhbr.mytank.repositories
 
 import de.ndhbr.mytank.data.ItemAlarmDao
-import de.ndhbr.mytank.data.TankItemsDao
 import de.ndhbr.mytank.models.ItemAlarm
 
 class ItemAlarmRepository private constructor(

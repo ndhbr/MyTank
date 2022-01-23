@@ -3,9 +3,6 @@ package de.ndhbr.mytank.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentId
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.storage.StorageException
 import de.ndhbr.mytank.R
 import de.ndhbr.mytank.data.ImageStorage
@@ -15,7 +12,6 @@ import de.ndhbr.mytank.repositories.TanksRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 
 class TanksViewModel(
     private val tanksRepository: TanksRepository,

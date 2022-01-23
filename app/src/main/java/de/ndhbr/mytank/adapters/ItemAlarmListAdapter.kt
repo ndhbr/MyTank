@@ -1,8 +1,6 @@
 package de.ndhbr.mytank.adapters
 
 import android.content.Context
-import android.net.wifi.ScanResult
-import android.telephony.NetworkScanRequest
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
