@@ -6,14 +6,18 @@ import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import de.ndhbr.mytank.R
 
 class ImageUtils {
     companion object {
         // Launch image picker intent
-        fun showImagePicker(intentLauncher: ActivityResultLauncher<Intent>) {
+        fun showImagePicker(context: Context, intentLauncher: ActivityResultLauncher<Intent>) {
             var chooseFile = Intent(Intent.ACTION_OPEN_DOCUMENT)
             chooseFile.type = "image/*"
-            chooseFile = Intent.createChooser(chooseFile, "Wähle ein Tank-Bild")
+            chooseFile = Intent.createChooser(
+                chooseFile,
+                context.getString(R.string.choose_a_picture)
+            )
             intentLauncher.launch(chooseFile)
         }
 

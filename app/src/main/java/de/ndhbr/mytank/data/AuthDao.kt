@@ -10,6 +10,8 @@ import de.ndhbr.mytank.models.User
 import java.lang.Exception
 
 class AuthDao {
+
+    // Firebase auth
     private var auth: FirebaseAuth = Firebase.auth
 
     // Checks if user is logged in

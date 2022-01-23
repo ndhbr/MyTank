@@ -13,6 +13,7 @@ class TanksDao constructor(
     private val firestore: FirebaseFirestore
 ) {
 
+    // Data
     private val tankList = mutableListOf<Tank>()
     private val tanks = MutableLiveData<List<Tank>>()
 

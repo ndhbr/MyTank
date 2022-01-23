@@ -14,6 +14,7 @@ class FishStockListAdapter(
     private val listener: TankItemListener
 ) :
     RecyclerView.Adapter<FishStockListAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

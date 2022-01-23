@@ -15,8 +15,10 @@ import java.lang.Exception
 class TankItemsDao constructor(
     private val firestore: FirebaseFirestore
 ) {
+    // Debug
     private val TAG = "TANK_ITEMS_DAO"
 
+    // Data
     private val tankItemsList = mutableListOf<TankItem>()
     private val tankItems = MutableLiveData<List<TankItem>>()
 
