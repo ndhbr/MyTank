@@ -222,7 +222,7 @@ class TankActivity : AppCompatActivity(), TankItemListener {
     }
 
     private fun onTankImageClick() {
-        ImageUtils.showImagePicker(imageIntentLauncher)
+        ImageUtils.showImagePicker(this@TankActivity, imageIntentLauncher)
     }
 
     override fun onTankItemClick(tankItem: TankItem) {

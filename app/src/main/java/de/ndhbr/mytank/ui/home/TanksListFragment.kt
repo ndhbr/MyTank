@@ -22,7 +22,6 @@ import androidx.core.view.size
 import de.ndhbr.mytank.utilities.Constants
 import de.ndhbr.mytank.utilities.ToastUtilities
 import kotlinx.coroutines.CoroutineExceptionHandler
-import java.lang.Exception
 
 class TanksListFragment : Fragment(R.layout.fragment_tanks_list), TankListener {
 

@@ -24,38 +24,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
-    <string-array name="item_type">
-        <item name="FISH">Fish</item>
-        <item name="CRUSTACEAN">Crustacean</item>
-        <item name="PLANT">Plant</item>
-        <item name="SNAIL">Snail</item>
-    </string-array>
-    <string-array name="hour_selection">
-        <item name="0">00:00 (12 am)</item>
-        <item name="1">01:00 (1 am)</item>
-        <item name="2">02:00 (2 am)</item>
-        <item name="3">03:00 (3 am)</item>
-        <item name="4">04:00 (4 am)</item>
-        <item name="5">05:00 (5 am)</item>
-        <item name="6">06:00 (6 am)</item>
-        <item name="7">07:00 (7 am)</item>
-        <item name="8">08:00 (8 am)</item>
-        <item name="9">09:00 (9 am)</item>
-        <item name="10">10:00 (10 am)</item>
-        <item name="11">11:00 (11 am)</item>
-        <item name="12">12:00 (12 pm)</item>
-        <item name="13">13:00 (1 pm)</item>
-        <item name="14">14:00 (2 pm)</item>
-        <item name="15">15:00 (3 pm)</item>
-        <item name="16">16:00 (4 pm)</item>
-        <item name="17">17:00 (5 pm)</item>
-        <item name="18">18:00 (6 pm)</item>
-        <item name="19">19:00 (7 pm)</item>
-        <item name="20">20:00 (8 pm)</item>
-        <item name="21">21:00 (9 pm)</item>
-        <item name="22">22:00 (10 pm)</item>
-        <item name="23">23:00 (11 pm)</item>
-    </string-array>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="edit_tank">Edit Tank</string>
@@ -124,18 +92,52 @@
     <string name="edit_your_fish_tank">Edit your fish tank</string>
     <string name="title_activity_tank_item">TankItemActivity</string>
     <string name="edit_tank_item">Edit tank item</string>
-    <string-array name="brightness_state">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>System</item>
-    </string-array>
-    <!-- Firebase Storage paths -->
-    <string name="fb_storage_tanks">%1$s.jpg</string>
-    <string name="fb_storage_tank_items">tank-items/%1$s.jpg</string>
     <string name="if_you_have_forgotten_your_password_you_can_request_a_password_reset_link_here">If you have forgotten your password, you can request a password reset link here.</string>
     <string name="change_brightness_state">Change brightness state</string>
     <string name="brightness_state">Brightness state</string>
     <string name="brightness_mode"><b>Brightness mode</b></string>
     <string name="authentication"><b>Authentication</b></string>
+    <string name="choose_a_picture">Choose a picture</string>
     <string name="error_brightness_system_follow_under_android_q">Follow the system in Dark/Light Mode only works from Android 10. Switching back to Dark Mode.</string>
+    <!-- Arrays -->
+    <string-array name="brightness_state">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>System</item>
+    </string-array>
+        <string-array name="item_type">
+        <item name="FISH">Fish</item>
+        <item name="CRUSTACEAN">Crustacean</item>
+        <item name="PLANT">Plant</item>
+        <item name="SNAIL">Snail</item>
+    </string-array>
+    <string-array name="hour_selection">
+        <item name="0">00:00 (12 am)</item>
+        <item name="1">01:00 (1 am)</item>
+        <item name="2">02:00 (2 am)</item>
+        <item name="3">03:00 (3 am)</item>
+        <item name="4">04:00 (4 am)</item>
+        <item name="5">05:00 (5 am)</item>
+        <item name="6">06:00 (6 am)</item>
+        <item name="7">07:00 (7 am)</item>
+        <item name="8">08:00 (8 am)</item>
+        <item name="9">09:00 (9 am)</item>
+        <item name="10">10:00 (10 am)</item>
+        <item name="11">11:00 (11 am)</item>
+        <item name="12">12:00 (12 pm)</item>
+        <item name="13">13:00 (1 pm)</item>
+        <item name="14">14:00 (2 pm)</item>
+        <item name="15">15:00 (3 pm)</item>
+        <item name="16">16:00 (4 pm)</item>
+        <item name="17">17:00 (5 pm)</item>
+        <item name="18">18:00 (6 pm)</item>
+        <item name="19">19:00 (7 pm)</item>
+        <item name="20">20:00 (8 pm)</item>
+        <item name="21">21:00 (9 pm)</item>
+        <item name="22">22:00 (10 pm)</item>
+        <item name="23">23:00 (11 pm)</item>
+    </string-array>
+    <!-- Firebase Storage paths -->
+    <string name="fb_storage_tanks">%1$s.jpg</string>
+    <string name="fb_storage_tank_items">tank-items/%1$s.jpg</string>
 </resources>

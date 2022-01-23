@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatDelegate
 
 class BrightnessUtils {
 
-    /// Shared preferences
+    // Shared preferences
     private val sharedPreferencesName = "mytank_prefs"
     private val brightnessSettingsKey = "BRIGHTNESS"
 
-    /// Get brightness state of app
+    // Get brightness state of app
     fun getBrightnessState(context: Context): BrightnessState {
         val sharedPref = context.getSharedPreferences(
             sharedPreferencesName, Context.MODE_PRIVATE
@@ -20,7 +20,7 @@ class BrightnessUtils {
         )
     }
 
-    /// Set brightness state of app
+    // Set brightness state of app
     fun setBrightnessState(context: Context, brightnessState: BrightnessState) {
         val sharedPref = context.getSharedPreferences(
             sharedPreferencesName, Context.MODE_PRIVATE

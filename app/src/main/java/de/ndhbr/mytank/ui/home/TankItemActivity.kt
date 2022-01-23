@@ -113,7 +113,10 @@ class TankItemActivity : AppCompatActivity() {
 
             // Image
             ivTankItemHeaderImage.setOnClickListener {
-                ImageUtils.showImagePicker(imageIntentLauncher)
+                ImageUtils.showImagePicker(
+                    this@TankItemActivity,
+                    imageIntentLauncher
+                )
             }
             if (tankItem.hasImage == true) {
                 imageStorage.getImage(

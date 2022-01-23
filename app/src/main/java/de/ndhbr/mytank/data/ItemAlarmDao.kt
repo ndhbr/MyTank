@@ -7,7 +7,6 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import de.ndhbr.mytank.models.ItemAlarm
-import de.ndhbr.mytank.models.User
 import de.ndhbr.mytank.utilities.Constants
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception

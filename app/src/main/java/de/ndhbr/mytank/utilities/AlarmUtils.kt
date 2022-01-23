@@ -16,16 +16,12 @@ class AlarmUtils(private var context: Context) {
         createNotificationChannel()
     }
 
-    /**
-     * Alarm Manager
-     */
+    // Alarm manager
     private val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE)
             as AlarmManager
     private val requestCode = 0
 
-    /**
-     * Sets the notification repeated alarm
-     */
+    // Sets the notification repeated alarm
     fun setAlarm() {
         val pendingIntent = getPendingIntent()
 
@@ -40,9 +36,7 @@ class AlarmUtils(private var context: Context) {
         )
     }
 
-    /**
-     * Checks wether the repeated alarm is already registered
-     */
+    // Checks wether the repeated alarm is already registered
     fun isAlarmUpAndRunning(): Boolean {
         return PendingIntent.getBroadcast(
             context,
@@ -52,17 +46,13 @@ class AlarmUtils(private var context: Context) {
         ) != null
     }
 
-    /**
-     * Cancel the alarm
-     */
+    // Cancel the alarm
     fun cancelAlarm() {
         val pendingIntent = getPendingIntent()
         alarmManager.cancel(pendingIntent)
     }
 
-    /**
-     * Create pending intent
-     */
+    // Create pending intent
     private fun getPendingIntent(): PendingIntent {
         val intent = Intent(this.context, DailyBroadcastReceiver::class.java)
         return PendingIntent.getBroadcast(
@@ -71,9 +61,7 @@ class AlarmUtils(private var context: Context) {
         )
     }
 
-    /**
-     * This initiates the required notification channel
-     */
+    // This initiates the required notification channel
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = context.getSystemService(

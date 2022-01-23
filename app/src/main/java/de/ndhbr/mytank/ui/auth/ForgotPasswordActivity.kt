@@ -3,7 +3,6 @@ package de.ndhbr.mytank.ui.auth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import de.ndhbr.mytank.R
 import de.ndhbr.mytank.databinding.ActivityForgotPasswordBinding

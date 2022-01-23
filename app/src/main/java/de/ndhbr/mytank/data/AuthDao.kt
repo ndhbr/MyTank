@@ -1,6 +1,5 @@
 package de.ndhbr.mytank.data
 
-import android.provider.ContactsContract
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
@@ -11,6 +10,8 @@ import de.ndhbr.mytank.models.User
 import java.lang.Exception
 
 class AuthDao {
+
+    // Firebase auth
     private var auth: FirebaseAuth = Firebase.auth
 
     // Checks if user is logged in
