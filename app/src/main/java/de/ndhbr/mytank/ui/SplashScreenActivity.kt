@@ -8,13 +8,14 @@ import de.ndhbr.mytank.R
 import de.ndhbr.mytank.data.AuthDao
 import de.ndhbr.mytank.ui.auth.LoginActivity
 import de.ndhbr.mytank.ui.home.OverviewActivity
+import de.ndhbr.mytank.utilities.BrightnessUtils
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val authDao = AuthDao()
-        window.statusBarColor = getColor(R.color.purple_700)
+        initialize()
 
         if (authDao.isLoggedIn()) {
             startActivity(Intent(this, OverviewActivity::class.java))
@@ -23,5 +24,17 @@ class SplashScreenActivity : AppCompatActivity() {
         }
 
         finish()
+    }
+
+    private fun initialize() {
+        // Status bar
+        window.statusBarColor = getColor(R.color.purple_700)
+
+        // Brightness
+        val brightnessUtils = BrightnessUtils()
+        brightnessUtils.setBrightnessState(
+            this@SplashScreenActivity,
+            brightnessUtils.getBrightnessState(this@SplashScreenActivity)
+        )
     }
 }

@@ -3,7 +3,6 @@ package de.ndhbr.mytank.ui.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider

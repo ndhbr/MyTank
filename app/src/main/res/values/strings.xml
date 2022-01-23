@@ -94,7 +94,7 @@
     <string name="click_on_the_plus_at_the_bottom_right_to_add_a_new_tank_item">Click on the plus at the bottom right ro add a new tank item</string>
     <string name="ab_login">Login</string>
     <string name="ab_register">Register</string>
-    <string name="welcome_to_mytank">Welcome to MyTank</string>
+    <string name="welcome_to_mytank"><b>Welcome to MyTank</b></string>
     <string name="mytank_is_a_simple_way">MyTank is a simple way to give your life a little more order. With MyTank you will never again neglect your aquarium or your fish.\n\nThis app is still in the middle of its initial phase. On this page you will later have many options to configure the app and your account.</string>
     <string name="login_anonymously_alert_warning">If you delete the app, or log out, you will irrevocably lose access to your app data!</string>
     <string name="logged_in_as">Logged in as %1$s</string>
@@ -124,8 +124,18 @@
     <string name="edit_your_fish_tank">Edit your fish tank</string>
     <string name="title_activity_tank_item">TankItemActivity</string>
     <string name="edit_tank_item">Edit tank item</string>
+    <string-array name="brightness_state">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>System</item>
+    </string-array>
     <!-- Firebase Storage paths -->
     <string name="fb_storage_tanks">%1$s.jpg</string>
     <string name="fb_storage_tank_items">tank-items/%1$s.jpg</string>
     <string name="if_you_have_forgotten_your_password_you_can_request_a_password_reset_link_here">If you have forgotten your password, you can request a password reset link here.</string>
+    <string name="change_brightness_state">Change brightness state</string>
+    <string name="brightness_state">Brightness state</string>
+    <string name="brightness_mode"><b>Brightness mode</b></string>
+    <string name="authentication"><b>Authentication</b></string>
+    <string name="error_brightness_system_follow_under_android_q">Follow the system in Dark/Light Mode only works from Android 10. Switching back to Dark Mode.</string>
 </resources>

@@ -2,21 +2,18 @@ package de.ndhbr.mytank.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import de.ndhbr.mytank.R
-import de.ndhbr.mytank.data.Database
 import de.ndhbr.mytank.databinding.FragmentMoreBinding
 import de.ndhbr.mytank.ui.auth.LoginActivity
+import de.ndhbr.mytank.utilities.BrightnessUtils
 import de.ndhbr.mytank.utilities.InjectorUtils
+import de.ndhbr.mytank.utilities.ToastUtilities
 import de.ndhbr.mytank.viewmodels.AuthViewModel
-import kotlinx.coroutines.launch
 
 class MoreFragment : Fragment() {
 
@@ -47,18 +44,69 @@ class MoreFragment : Fragment() {
         val viewModel =
             ViewModelProvider(this@MoreFragment, factory).get(AuthViewModel::class.java)
 
-        binding.tvLoggedInAs.text =
-            String.format(resources.getString(R.string.logged_in_as), viewModel.isLoggedInAs())
+        with(binding) {
+            // Brightness state
+            if (spBrightnessState.adapter == null) {
+                val brightnessUtils = BrightnessUtils()
+                val arrayAdapter = ArrayAdapter(
+                    context!!,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    BrightnessUtils.BrightnessState.values()
+                )
+                spBrightnessState.adapter = arrayAdapter
+                spBrightnessState.setSelection(
+                    brightnessUtils.getBrightnessState(context!!).ordinal
+                )
+                spBrightnessState.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val state = BrightnessUtils.BrightnessState.values()[position]
 
-        binding.btnLogout.setOnClickListener {
-            viewModel.logout()
+                        // If under android version 10 -> fallback dark mode
+                        if (state == BrightnessUtils.BrightnessState.System &&
+                            android.os.Build.VERSION.SDK_INT <
+                            android.os.Build.VERSION_CODES.Q
+                        ) {
+                            ToastUtilities.showLongToast(
+                                context!!,
+                                getString(R.string.error_brightness_system_follow_under_android_q)
+                            )
+                            spBrightnessState.setSelection(
+                                BrightnessUtils.BrightnessState.Dark.ordinal
+                            )
 
-            // Send to login screen
-            val intent = Intent(
-                activity,
-                LoginActivity::class.java
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
+                        } else {
+                            brightnessUtils.setBrightnessState(
+                                context!!,
+                                BrightnessUtils.BrightnessState.values()[position]
+                            )
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                    }
+                }
+            }
+
+            // User state
+            tvLoggedInAs.text =
+                String.format(resources.getString(R.string.logged_in_as), viewModel.isLoggedInAs())
+            btnLogout.setOnClickListener {
+                viewModel.logout()
+
+                // Send to login screen
+                val intent = Intent(
+                    activity,
+                    LoginActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
         }
     }
 }
