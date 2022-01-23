@@ -1,9 +1,12 @@
 # MyTank App - The Fish Tank Manager
-![Header Image](assets/header.png)
+![Header Image](readme-assets/header.png)
 
 ## Why?
 With MyTank you can manage all your aquariums. Add your snails, shrimp, fish and even plants and create various reminders.
 You can create feeding reminders for animals, alarms for whole aquariums (e.g. water change) or even fertilizer alarms for plants!
+
+## Demo Video
+https://www.youtube.com/watch?v=UfXqCQds5Uo
 
 ## Features
 - Register/Login Methods
